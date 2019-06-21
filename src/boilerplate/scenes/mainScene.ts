@@ -14,7 +14,10 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.image("logo", "./assets/sprites/guy.png");
+    this.load.tilemapTiledJSON('map', '.src/boilerplate/assets/map.json')
+    this.load.image("groundTile", "./src/boilerplate/assets/ground.png");
+    this.load.image("groundTile", "./src/boilerplate/assets/guy.png");
+
   }
 
   create(): void {
