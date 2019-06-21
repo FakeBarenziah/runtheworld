@@ -15,12 +15,19 @@ export class MainScene extends Phaser.Scene {
 
   preload(): void {
     this.load.tilemapTiledJSON('map', '.src/boilerplate/assets/map.json')
-    this.load.spritesheet("foreground", "./src/boilerplate/assets/GroundSheet.png",{frameWidth:36, frameHeight: 36});
-    this.load.image("groundTile", "./src/boilerplate/assets/guy.png");
+    this.load.spritesheet('foreground', "./src/boilerplate/assets/GroundSheet.png",{frameWidth:36, frameHeight: 36});
+    this.load.image('groundTile', "./src/boilerplate/assets/guy.png");
 
   }
 
   create(): void {
-    this.phaserSprite = this.add.sprite(400, 300, "logo");
+    var map = this.make.tilemap({key: 'map'})
+    var gt = map.addTilesetImage('foreground')
+    var gL = map.createDynamicLayer('World', gt, 0, 0);
+
+    gL.setCollisionByExclusion([-1]);
+
+    this.physics.world.bounds.width = gL.width;
+    this.physics.world.bounds.height = gL.height;
   }
 }
