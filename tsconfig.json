@@ -5,5 +5,7 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "strict": false
-  }
+  },
+  "include":["src/*"],
+  "exclude": ["src/boilerplate/assets/*.tsx"]
 }
