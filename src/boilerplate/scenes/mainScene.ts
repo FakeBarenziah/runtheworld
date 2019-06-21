@@ -15,7 +15,7 @@ export class MainScene extends Phaser.Scene {
 
   preload(): void {
     this.load.tilemapTiledJSON('map', '.src/boilerplate/assets/map.json')
-    this.load.image("groundTile", "./src/boilerplate/assets/ground.png");
+    this.load.spritesheet("foreground", "./src/boilerplate/assets/GroundSheet.png",{frameWidth:36, frameHeight: 36});
     this.load.image("groundTile", "./src/boilerplate/assets/guy.png");
 
   }
