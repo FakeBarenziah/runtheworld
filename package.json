@@ -1,7 +1,7 @@
 {
-  "name": "phaser3-typescript",
-  "version": "1.2.5",
-  "description": "Boilerplate, Game Examples, Cheat Sheets and Tutorials for Phaser 3 in TypeScript",
+  "name": "runtheworld",
+  "version": "0.0.1",
+  "description": "TypeScript",
   "keywords": [
     "Phaser",
     "Phaser 3",
@@ -34,15 +34,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digitsensitive/phaser3-typescript.git"
+    "url": "git+https://github.com/FakeBarenziah/runtheworld.git"
   },
   "author": {
     "name": "digitsensitive",
     "email": "digit.sensitivee@gmail.com"
   },
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/digitsensitive/phaser3-typescript/issues"
-  },
-  "homepage": "https://github.com/digitsensitive/phaser3-typescript#readme"
+  "license": "ISC"
 }
