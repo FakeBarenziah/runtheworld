@@ -33,11 +33,11 @@ export class MainScene extends Phaser.Scene {
     // Creats a game layer from the name in the map.json file
     // this.groundLayer.setCollisionByExclusion([-1]);
     // this.physics.world.enable(this.groundLayer)
-    this.groundLayer.setCollisionByProperty({"collide":true}, true, true)
+    map.setCollisionByProperty({"Collides":true}, true, true)
     // map.setCollision([1, 2, 3, 4, 5, 6, 7, 8], true, false, this.groundLayer)
 
     this.physics.world.bounds.width = this.groundLayer.width;
-    this.physics.world.bounds.height = this.groundLayer.height+60;
+    this.physics.world.bounds.height = this.groundLayer.height;
     this.keys = {
       jump: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
       right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
@@ -57,6 +57,9 @@ export class MainScene extends Phaser.Scene {
 
   }
   update(time, delta):void {
+    this.physics.collide(this.groundLayer, this.guy)
     this.guy.update(this.keys, time, delta)
+  }
+  render(){
   }
 }

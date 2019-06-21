@@ -9,6 +9,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
         this.acceleration = 600;
         this.body.maxVelocity.x = 200;
         this.body.maxVelocity.y = 500;
+        this.body.checkCollision.up = false;
         this.type = 'guy';
         this.jumping = false;
         this.jumpTimer = -1
@@ -26,7 +27,8 @@ export default class Guy extends Phaser.GameObjects.Sprite{
           this.run(-this.acceleration / 3);
       }
       this.flipX = true;
-    } else if (input.right) {
+    }
+    else if (input.right) {
       if (this.body.velocity.y === 0) {
           this.run(this.acceleration);
       } else {
@@ -34,14 +36,10 @@ export default class Guy extends Phaser.GameObjects.Sprite{
       }
       this.flipX = false;
     }
-    if (input.jump && (!this.jumping || this.jumpTimer > 0)) {
+    if (this.body.blocked.down&&input.jump) {
       this.jump();
-  } else if (!input.jump) {
-      this.jumpTimer = -1; // Don't resume jump if button is released, prevents mini double-jumps
-      if (this.body.blocked.down) {
-          this.jumping = false;
-      }
   }
+
 //   if (this.body.velocity.y < 0) {
 //     this.scene.physics.world.collide(this, this.scene.groundLayer, this.scene.tileCollision);
 // } else {
@@ -52,24 +50,9 @@ export default class Guy extends Phaser.GameObjects.Sprite{
     this.body.setAccelerationX(vel);
   }
   jump() {
-    if (!this.body.blocked.down && !this.jumping) {
-        return;
-    }
+    console.log(this.body)
+    this.body.setVelocityY(-500)
 
-    if (!this.jumping) {
-        // if (this.animSuffix === '') {
-        //     this.scene.sound.playAudioSprite('sfx', 'smb_jump-small');
-        // } else {
-        //     this.scene.sound.playAudioSprite('sfx', 'smb_jump-super');
-        // }
-    }
-    if (this.body.velocity.y < 0 || this.body.blocked.down) {
-        this.body.setVelocityY(-200);
-    }
-    if (!this.jumping) {
-        this.jumpTimer = 300;
-    }
-    this.jumping = true;
   }
 
 }
