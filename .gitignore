@@ -10,6 +10,7 @@ node_modules
 *.tsx
 yarn.lock
 package-lock.json
-src/games
-assets/github
-assets/font
+src/games/*
+assets/github/*
+assets/font/*
+*.piko
