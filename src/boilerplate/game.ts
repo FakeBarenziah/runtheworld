@@ -14,6 +14,7 @@ const config: GameConfig = {
   type: Phaser.AUTO,
   parent: "game",
   scene: MainScene,
+  backgroundColor : "#787878",
   physics: {
     default: "arcade",
     arcade: {
