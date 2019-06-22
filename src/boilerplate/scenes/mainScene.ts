@@ -44,7 +44,7 @@ export class MainScene extends Phaser.Scene {
     console.log(this)
     this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer()
 }
-    this.load.image('world', "./src/boilerplate/assets/GroundSheet.png")
+    this.load.image('world', "./src/boilerplate/assets/DesertTiles.png")
     // Loads the image that was tiled
     this.load.image('guy', "./src/boilerplate/assets/guy.png");
 

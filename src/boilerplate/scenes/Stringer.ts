@@ -24,11 +24,11 @@ export default function(){
   "tileheight":32,
   "tilesets":[
          {
-          "columns":3,
+          "columns":6,
           "firstgid":1,
-          "image":"GroundSheet.png",
-          "imageheight":96,
-          "imagewidth":96,
+          "image":"DesertTiles.png",
+          "imageheight":160,
+          "imagewidth":192,
           "margin":0,
           "name":"world",
           "spacing":0,
@@ -37,7 +37,7 @@ export default function(){
                   "name":"New Terrain",
                   "tile":3
                  }],
-          "tilecount":9,
+          "tilecount":27,
           "tileheight":32,
           "tiles":[
                  {
