@@ -83,7 +83,7 @@ export class MainScene extends Phaser.Scene {
     if(input.small && this.zoom < 2){
       this.zoom += .1
     }
-//    this.cameras.main.start(this.zoom, 1)
+    this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
   }
   render(){

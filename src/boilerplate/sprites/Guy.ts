@@ -36,6 +36,9 @@ export default class Guy extends Phaser.GameObjects.Sprite{
       }
       this.flipX = false;
     }
+    else {
+      this.run(0)
+    }
     if (this.body.blocked.down&&input.jump) {
       this.jump();
   }
@@ -47,7 +50,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
 // }
   }
   run(vel) {
-    this.body.setAccelerationX(vel);
+    this.body.setVelocityX(vel);
   }
   jump() {
     console.log(this.body)
