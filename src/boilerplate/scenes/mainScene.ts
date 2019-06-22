@@ -86,6 +86,7 @@ export class MainScene extends Phaser.Scene {
   update(time, delta):void {
 
     if(!this.load.isLoading() && this.hotLoad) this.hotLoader()
+
     this.physics.collide(this.guy, this.groundLayer1 )
     this.physics.collide(this.guy, this.groundLayer2 )
 
@@ -105,6 +106,7 @@ export class MainScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
     
     if(this.guy.x > 50*32 && !this.toggle){
+      
       this.world += 1
 
       this.groundLayer1.x = 40*32
@@ -121,11 +123,17 @@ export class MainScene extends Phaser.Scene {
     }
     
     if(this.guy.x > 50*32 && this.toggle){
+      
+      this.world += 1
+
       this.groundLayer2.x = 40*32
 
       this.groundLayer1.x = 0
 
       this.guy.x -= 40*32
+      
+      this.loadNewMap()
+
       this.toggle = !this.toggle
 
     }
@@ -152,13 +160,17 @@ export class MainScene extends Phaser.Scene {
     this.groundLayer1 = nextMap.createStaticLayer('Tile Layer 1', groundTile1, 40*32, 0);
     
     nextMap.setCollisionByProperty({"Collides":true}, true, true)
+
    } else{ 
+
     var groundTile2 = nextMap.addTilesetImage('world')
     
     this.groundLayer2 = nextMap.createStaticLayer('Tile Layer 1', groundTile2, 40*32, 0);
     
     nextMap.setCollisionByProperty({"Collides":true}, true, true)
    }
+
+   this.hotLoad = false
   }
 
 }
