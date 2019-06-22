@@ -20,36 +20,47 @@ export class MainScene extends Phaser.Scene {
   private phaserSprite: Phaser.GameObjects.Sprite;
   private keys: keysObj
   private guy: Guy
-  private groundLayer: Phaser.Tilemaps.DynamicTilemapLayer
+  private groundLayer1: Phaser.Tilemaps.StaticTilemapLayer
+  private groundLayer2: Phaser.Tilemaps.StaticTilemapLayer
+  private toggle: Boolean
   private zoom: number
   constructor() {
     super({
       key: "MainScene"
     });
     this.zoom = 1.0
+    this.toggle = false
   }
 
   preload(): void {
-    this.load.tilemapTiledJSON('map', './src/boilerplate/assets/fuck.json')
+    this.load.tilemapTiledJSON('map1', './src/boilerplate/assets/fuck.json')
     // Load the map as JSON from the file created by Tiled
+    this.load.tilemapTiledJSON('map2', './src/boilerplate/assets/map.json')
+
     this.load.image('world', "./src/boilerplate/assets/GroundSheet.png")
     // Loads the image that was tiled
     this.load.image('guy', "./src/boilerplate/assets/guy.png");
 
   }
   create(): void {
-    var map = this.make.tilemap({key: 'map'})
-    var groundTile = map.addTilesetImage('world')
+    var map1 = this.make.tilemap({key: 'map1'})
+    var groundTile1 = map1.addTilesetImage('world')
     // 'world' image used as a tileset from preload
-    this.groundLayer = map.createDynamicLayer('Tile Layer 1', groundTile, 0, 0);
+    var map2 = this.make.tilemap({key: 'map2'})
+    var groundTile2 = map2.addTilesetImage('world')
+
+    this.groundLayer1 = map1.createStaticLayer('Tile Layer 1', groundTile1, 0, 0);
+    this.groundLayer2 = map2.createStaticLayer('Tile Layer 1', groundTile2, 40*32, 0);
     // Creats a game layer from the name in the map.json file
     // this.groundLayer.setCollisionByExclusion([-1]);
     // this.physics.world.enable(this.groundLayer)
-    map.setCollisionByProperty({"Collides":true}, true, true)
+    map1.setCollisionByProperty({"Collides":true}, true, true)
+    map2.setCollisionByProperty({"Collides":true}, true, true)
+
     // map.setCollision([1, 2, 3, 4, 5, 6, 7, 8], true, false, this.groundLayer)
 
-    this.physics.world.bounds.width = this.groundLayer.width;
-    this.physics.world.bounds.height = this.groundLayer.height;
+    this.physics.world.bounds.width = 80*32;
+    this.physics.world.bounds.height = 15*32;
     this.keys = {
       jump: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
       right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
@@ -69,7 +80,9 @@ export class MainScene extends Phaser.Scene {
 
   }
   update(time, delta):void {
-    this.physics.collide(this.guy, this.groundLayer )
+    this.physics.collide(this.guy, this.groundLayer1 )
+    this.physics.collide(this.guy, this.groundLayer2 )
+
     this.guy.update(this.keys, time, delta, this.zoom)
     let input =  {
       big: this.keys.big.isDown,
@@ -80,11 +93,26 @@ export class MainScene extends Phaser.Scene {
     }``
     if(input.small && this.zoom < 5){
       this.zoom += .05
+      console.log(this.groundLayer1, this.groundLayer2)
     }
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
+    
+    if(this.guy.x > 50*32 && !this.toggle){
+      this.groundLayer1.x = 40*32
+      this.guy.x -= 40*32
+      this.groundLayer2.x = 0
+      this.toggle = !this.toggle
+    }
+    
+    if(this.guy.x > 50*32 && this.toggle){
+      this.groundLayer2.x = 40*32
+      this.guy.x -= 40*32
+      this.groundLayer1.x = 0
+      this.toggle = !this.toggle
 
+    }
 
   }
 
