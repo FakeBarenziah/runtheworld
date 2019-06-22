@@ -1,5 +1,6 @@
 import Guy from "../sprites/Guy";
 import { Z_DEFAULT_COMPRESSION } from "zlib";
+import Phaser from "phaser"
 
 /**
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
@@ -98,14 +99,14 @@ export class MainScene extends Phaser.Scene {
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
-    
+
     if(this.guy.x > 50*32 && !this.toggle){
       this.groundLayer1.x = 40*32
       this.guy.x -= 40*32
       this.groundLayer2.x = 0
       this.toggle = !this.toggle
     }
-    
+
     if(this.guy.x > 50*32 && this.toggle){
       this.groundLayer2.x = 40*32
       this.guy.x -= 40*32
