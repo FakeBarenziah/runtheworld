@@ -14,30 +14,25 @@ export default class Guy extends Phaser.GameObjects.Sprite{
         this.jumping = false;
         this.jumpTimer = -1
   }
-  update(keys, time, delta){
+  update(keys, time, delta,zoom){
     let input = {
       left: keys.left.isDown,
       right:keys.right.isDown,
       jump:keys.jump.isDown
     };
     if (input.left) {
-      if (this.body.velocity.y === 0) {
-          this.run(-this.acceleration);
-      } else {
-          this.run(-this.acceleration / 3);
-      }
+      this.run(-this.acceleration*zoom);
       this.flipX = true;
     }
     else if (input.right) {
-      if (this.body.velocity.y === 0) {
-          this.run(this.acceleration);
-      } else {
-          this.run(this.acceleration / 3);
-      }
+      this.run(this.acceleration*zoom);
       this.flipX = false;
     }
+    else {
+      this.run(0)
+    }
     if (this.body.blocked.down&&input.jump) {
-      this.jump();
+      this.jump(zoom);
   }
 
 //   if (this.body.velocity.y < 0) {
@@ -47,11 +42,11 @@ export default class Guy extends Phaser.GameObjects.Sprite{
 // }
   }
   run(vel) {
-    this.body.setAccelerationX(vel);
+    this.body.setVelocityX(vel);
   }
-  jump() {
+  jump(zoom) {
     console.log(this.body)
-    this.body.setVelocityY(-500)
+    this.body.setVelocityY(-200*Math.sqrt(zoom))
 
   }
 

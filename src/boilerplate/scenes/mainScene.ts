@@ -1,4 +1,5 @@
 import Guy from "../sprites/Guy";
+import { Z_DEFAULT_COMPRESSION } from "zlib";
 
 /**
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
@@ -6,19 +7,30 @@ import Guy from "../sprites/Guy";
  * @license      Digitsensitive
  */
 
+interface keysObj {
+  jump: any,
+  right:any,
+  left: any,
+  big: any,
+  small: any
+
+}
+
 export class MainScene extends Phaser.Scene {
   private phaserSprite: Phaser.GameObjects.Sprite;
-  private keys: object
+  private keys: keysObj
   private guy: Guy
   private groundLayer: Phaser.Tilemaps.DynamicTilemapLayer
+  private zoom: number
   constructor() {
     super({
       key: "MainScene"
     });
+    this.zoom = 1.0
   }
 
   preload(): void {
-    this.load.tilemapTiledJSON('map', './src/boilerplate/assets/map.json')
+    this.load.tilemapTiledJSON('map', './src/boilerplate/assets/fuck.json')
     // Load the map as JSON from the file created by Tiled
     this.load.image('world', "./src/boilerplate/assets/GroundSheet.png")
     // Loads the image that was tiled
@@ -51,15 +63,28 @@ export class MainScene extends Phaser.Scene {
       x:30,
       y:30
     })
+//    this.cameras.main = new Phaser.Cameras.Scene2D.Effects.Zoom(this.cameras.main)
     this.cameras.main.startFollow(this.guy)
     this.guy.body.collideWorldBounds=true;
+
     // this.guy.body
 
   }
   update(time, delta):void {
-    this.physics.collide(this.groundLayer, this.guy)
-    this.guy.update(this.keys, time, delta)
+    this.physics.collide(this.guy, this.groundLayer )
+    this.guy.update(this.keys, time, delta, this.zoom)
+    let input =  {
+      big: this.keys.big.isDown,
+      small: this.keys.small.isDown,
+    };
+    if(input.big && this.zoom > .2){
+     this.zoom -= .05
+    }``
+    if(input.small && this.zoom < 5){
+      this.zoom += .05
+    }
+    this.cameras.main.zoom = 1/this.zoom
+    this.guy.setScale(this.zoom)
   }
-  render(){
-  }
+
 }

@@ -27,7 +27,7 @@
          "imageheight":96,
          "imagewidth":96,
          "margin":0,
-         "name":"GroundSheet",
+         "name":"world",
          "spacing":0,
          "terrains":[
                 {
