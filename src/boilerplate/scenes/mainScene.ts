@@ -24,16 +24,20 @@ export class MainScene extends Phaser.Scene {
   private groundLayer2: Phaser.Tilemaps.StaticTilemapLayer
   private toggle: Boolean
   private zoom: number
+  private world: number
+  private hotLoad: Boolean
   constructor() {
     super({
       key: "MainScene"
     });
     this.zoom = 1.0
     this.toggle = false
+    this.world = 2
+    this.hotLoad = false
   }
 
   preload(): void {
-    this.load.tilemapTiledJSON('map1', './src/boilerplate/assets/fuck.json')
+    this.load.tilemapTiledJSON('map1', './src/boilerplate/assets/map.json')
     // Load the map as JSON from the file created by Tiled
     this.load.tilemapTiledJSON('map2', './src/boilerplate/assets/map.json')
 
@@ -80,6 +84,9 @@ export class MainScene extends Phaser.Scene {
 
   }
   update(time, delta):void {
+
+    if(!this.load.isLoading() && this.hotLoad) this.hotLoader()
+
     this.physics.collide(this.guy, this.groundLayer1 )
     this.physics.collide(this.guy, this.groundLayer2 )
 
@@ -88,32 +95,82 @@ export class MainScene extends Phaser.Scene {
       big: this.keys.big.isDown,
       small: this.keys.small.isDown,
     };
-    if(input.big && this.zoom > .2){
-     this.zoom -= .05
+    if(input.big && this.zoom < 5){
+     this.zoom += .05
     }``
-    if(input.small && this.zoom < 5){
-      this.zoom += .05
-      console.log(this.groundLayer1, this.groundLayer2)
+    if(input.small && this.zoom > .2){
+      this.zoom -= .05
     }
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
     
     if(this.guy.x > 50*32 && !this.toggle){
+      
+      this.world += 1
+
       this.groundLayer1.x = 40*32
-      this.guy.x -= 40*32
+
       this.groundLayer2.x = 0
+
+      this.guy.x -= 40*32
+
+      
+
+      this.loadNewMap()
+
       this.toggle = !this.toggle
     }
     
     if(this.guy.x > 50*32 && this.toggle){
+      
+      this.world += 1
+
       this.groundLayer2.x = 40*32
-      this.guy.x -= 40*32
+
       this.groundLayer1.x = 0
+
+      this.guy.x -= 40*32
+      
+      this.loadNewMap()
+
       this.toggle = !this.toggle
 
     }
 
+  }
+
+  loadNewMap(){
+
+    this.load.tilemapTiledJSON(`map${this.world}`, './src/boilerplate/assets/fuck.json')
+    
+    this.load.start()
+
+    this.hotLoad = true
+  }
+  
+  hotLoader(){
+
+    var nextMap = this.make.tilemap({key: `map${this.world}`})
+    
+   if(this.world%2){
+
+    var groundTile1 = nextMap.addTilesetImage('world')
+    
+    this.groundLayer1 = nextMap.createStaticLayer('Tile Layer 1', groundTile1, 40*32, 0);
+    
+    nextMap.setCollisionByProperty({"Collides":true}, true, true)
+
+   } else{ 
+
+    var groundTile2 = nextMap.addTilesetImage('world')
+    
+    this.groundLayer2 = nextMap.createStaticLayer('Tile Layer 1', groundTile2, 40*32, 0);
+    
+    nextMap.setCollisionByProperty({"Collides":true}, true, true)
+   }
+
+   this.hotLoad = false
   }
 
 }
