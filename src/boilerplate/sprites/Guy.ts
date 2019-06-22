@@ -31,7 +31,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
     else {
       this.run(0)
     }
-    if (this.body.blocked.down&&input.jump) {
+    if (input.jump) {
       this.jump(zoom);
   }
 

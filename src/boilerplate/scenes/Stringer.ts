@@ -1,18 +1,18 @@
 import MapMaker from "./MapMaker"
 export default function(){
   const data = MapMaker()
-  return { "height":600,
+  return { "height":150,
   "infinite":false,
   "layers":[
          {
-          "data":data,
-          "height":600,
+          "data": data,
+          "height":150,
           "id":1,
           "name":"Tile Layer 1",
           "opacity":1,
           "type":"tilelayer",
           "visible":true,
-          "width":600,
+          "width":300,
           "x":0,
           "y":0
          }],
@@ -30,16 +30,20 @@ export default function(){
           "imageheight":160,
           "imagewidth":192,
           "margin":0,
-          "name":"world",
+          "name":"DesertTiles",
           "spacing":0,
-          "terrains":[
-                 {
-                  "name":"New Terrain",
-                  "tile":3
-                 }],
-          "tilecount":27,
+          "tilecount":30,
           "tileheight":32,
           "tiles":[
+                 {
+                  "id":0,
+                  "properties":[
+                         {
+                          "name":"Collides",
+                          "type":"bool",
+                          "value":true
+                         }]
+                 },
                  {
                   "id":1,
                   "properties":[
@@ -60,28 +64,6 @@ export default function(){
                  },
                  {
                   "id":3,
-                  "objectgroup":
-                     {
-                      "draworder":"index",
-                      "name":"",
-                      "objects":[
-                             {
-                              "height":5.81818181818182,
-                              "id":1,
-                              "name":"",
-                              "rotation":0,
-                              "type":"",
-                              "visible":true,
-                              "width":32.9090909090909,
-                              "x":-0.545454545454546,
-                              "y":0
-                             }],
-                      "opacity":1,
-                      "type":"objectgroup",
-                      "visible":true,
-                      "x":0,
-                      "y":0
-                     },
                   "properties":[
                          {
                           "name":"Collides",
@@ -124,13 +106,22 @@ export default function(){
                           "type":"bool",
                           "value":true
                          }]
+                 },
+                 {
+                  "id":8,
+                  "properties":[
+                         {
+                          "name":"Collides",
+                          "type":"bool",
+                          "value":true
+                         }]
                  }],
-          "tilewidth":32,
-          "transparentcolor":"#ff00ff"
+          "tilewidth":32
          }],
   "tilewidth":32,
   "type":"map",
   "version":1.2,
-  "width":600
+  "width":300
  }
+
 }

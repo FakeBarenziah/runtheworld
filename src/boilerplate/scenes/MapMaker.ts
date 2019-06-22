@@ -6,9 +6,9 @@ const MapMaker= ():Array<number> =>{
     return aVal>0
   };
 
-  let level:number = 565;
+  let level:number = 125;
 
-  for (let i=0; i < 600; i++){
+  for (let i=0; i < 300; i++){
 
     const levelOffset:number = Math.floor((Math.random()*3)-1);
 
@@ -16,7 +16,7 @@ const MapMaker= ():Array<number> =>{
 
     const newLevel:number = level + levelOffset
 
-    for(let j=0; j<600; j++){
+    for(let j=0; j<150; j++){
 
       if(j < newLevel){
         column.push(0)
