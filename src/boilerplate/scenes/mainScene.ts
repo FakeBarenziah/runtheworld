@@ -1,6 +1,7 @@
 import Guy from "../sprites/Guy";
 import { Z_DEFAULT_COMPRESSION } from "zlib";
-import Phaser from "phaser"
+// import Phaser from "phaser"
+import Stringer from "./Stringer"
 
 /**
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
@@ -40,9 +41,10 @@ export class MainScene extends Phaser.Scene {
   preload(): void {
     this.load.tilemapTiledJSON('map1', './src/boilerplate/assets/map.json')
     // Load the map as JSON from the file created by Tiled
-    this.load.tilemapTiledJSON('map2', './src/boilerplate/assets/map.json')
-
-    this.load.image('world', "./src/boilerplate/assets/GroundSheet.png")
+    console.log(this)
+    this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer()
+}
+    this.load.image('world', "./src/boilerplate/assets/DesertTiles.png")
     // Loads the image that was tiled
     this.load.image('guy', "./src/boilerplate/assets/guy.png");
 
@@ -107,7 +109,7 @@ export class MainScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
 
     if(this.guy.x > 50*32 && !this.toggle){
-      
+
       this.world += 1
 
       this.groundLayer1.x = 40*32
@@ -116,7 +118,7 @@ export class MainScene extends Phaser.Scene {
 
       this.guy.x -= 40*32
 
-      
+
 
       this.loadNewMap()
 
@@ -124,7 +126,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     if(this.guy.x > 50*32 && this.toggle){
-      
+
       this.world += 1
 
       this.groundLayer2.x = 40*32
@@ -132,7 +134,7 @@ export class MainScene extends Phaser.Scene {
       this.groundLayer1.x = 0
 
       this.guy.x -= 40*32
-      
+
       this.loadNewMap()
 
       this.toggle = !this.toggle
@@ -144,30 +146,30 @@ export class MainScene extends Phaser.Scene {
   loadNewMap(){
 
     this.load.tilemapTiledJSON(`map${this.world}`, './src/boilerplate/assets/fuck.json')
-    
+
     this.load.start()
 
     this.hotLoad = true
   }
-  
+
   hotLoader(){
 
     var nextMap = this.make.tilemap({key: `map${this.world}`})
-    
+
    if(this.world%2){
 
     var groundTile1 = nextMap.addTilesetImage('world')
-    
+
     this.groundLayer1 = nextMap.createStaticLayer('Tile Layer 1', groundTile1, 40*32, 0);
-    
+
     nextMap.setCollisionByProperty({"Collides":true}, true, true)
 
-   } else{ 
+   } else{
 
     var groundTile2 = nextMap.addTilesetImage('world')
-    
+
     this.groundLayer2 = nextMap.createStaticLayer('Tile Layer 1', groundTile2, 40*32, 0);
-    
+
     nextMap.setCollisionByProperty({"Collides":true}, true, true)
    }
 
