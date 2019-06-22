@@ -30,7 +30,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.tilemapTiledJSON('map', './src/boilerplate/assets/map.json')
+    this.load.tilemapTiledJSON('map', './src/boilerplate/assets/fuck.json')
     // Load the map as JSON from the file created by Tiled
     this.load.image('world', "./src/boilerplate/assets/GroundSheet.png")
     // Loads the image that was tiled
@@ -66,22 +66,22 @@ export class MainScene extends Phaser.Scene {
 //    this.cameras.main = new Phaser.Cameras.Scene2D.Effects.Zoom(this.cameras.main)
     this.cameras.main.startFollow(this.guy)
     this.guy.body.collideWorldBounds=true;
-   
+
     // this.guy.body
 
   }
   update(time, delta):void {
-    this.physics.collide(this.groundLayer, this.guy)
+    this.physics.collide(this.guy, this.groundLayer )
     this.guy.update(this.keys, time, delta, this.zoom)
     let input =  {
       big: this.keys.big.isDown,
       small: this.keys.small.isDown,
     };
     if(input.big && this.zoom > .2){
-     this.zoom -= .1
+     this.zoom -= .05
     }``
     if(input.small && this.zoom < 5){
-      this.zoom += .1
+      this.zoom += .05
     }
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)

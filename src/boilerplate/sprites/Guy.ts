@@ -46,7 +46,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
   }
   jump(zoom) {
     console.log(this.body)
-    this.body.setVelocityY(-500*Math.sqrt(zoom))
+    this.body.setVelocityY(-200*Math.sqrt(zoom))
 
   }
 
