@@ -72,20 +72,19 @@ export class MainScene extends Phaser.Scene {
   }
   update(time, delta):void {
     this.physics.collide(this.groundLayer, this.guy)
-    this.guy.update(this.keys, time, delta)
+    this.guy.update(this.keys, time, delta, this.zoom)
     let input =  {
       big: this.keys.big.isDown,
       small: this.keys.small.isDown,
     };
-    if(input.big && this.zoom > .5){
+    if(input.big && this.zoom > .2){
      this.zoom -= .1
-    }
-    if(input.small && this.zoom < 2){
+    }``
+    if(input.small && this.zoom < 5){
       this.zoom += .1
     }
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
   }
-  render(){
-  }
+
 }
