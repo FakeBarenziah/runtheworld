@@ -1,4 +1,4 @@
-const MapMaker= (prevCol?:Array<number>):Array<number> =>{
+const MapMaker= ():Array<number> =>{
   const outArray = [];
   const colsArray = [];
 
@@ -6,13 +6,7 @@ const MapMaker= (prevCol?:Array<number>):Array<number> =>{
     return aVal>0
   };
 
-  let level:number;
-
-  if(prevCol){
-   level = prevCol.findIndex(levelCheck)
-  } else {
-    level = 570
-  }
+  let level:number = 565;
 
   for (let i=0; i < 600; i++){
 
@@ -39,7 +33,9 @@ const MapMaker= (prevCol?:Array<number>):Array<number> =>{
     level = colsArray[colsArray.length-1].findIndex(levelCheck)
   }
 
-  while
+  while(colsArray[0].length){
+    colsArray.forEach(each => outArray.push(each.shift()))
+  }
 
   return outArray
 }
