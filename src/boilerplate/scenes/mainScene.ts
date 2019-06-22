@@ -64,9 +64,7 @@ export class MainScene extends Phaser.Scene {
       y:30
     })
 //    this.cameras.main = new Phaser.Cameras.Scene2D.Effects.Zoom(this.cameras.main)
-    this.cameras.main.startFollow(this.guy)
     this.guy.body.collideWorldBounds=true;
-
     // this.guy.body
 
   }
@@ -85,6 +83,9 @@ export class MainScene extends Phaser.Scene {
     }
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
+    this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
+
+
   }
 
 }
