@@ -14,8 +14,8 @@ export default class Guy extends Phaser.GameObjects.Sprite{
         config.scene.physics.world.enable(this);
         config.scene.add.existing(this);
         this.acceleration = 600;
-        this.body.maxVelocity.x = 6000;
-        this.body.maxVelocity.y = 500;
+        this.body.maxVelocity.x = 700;
+        this.body.maxVelocity.y = 700;
         this.body.checkCollision.up = false;
         this.type = 'guy';
   }

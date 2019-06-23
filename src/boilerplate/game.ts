@@ -6,7 +6,7 @@
 
 import "phaser";
 import { MainScene } from "./scenes/mainScene";
-
+  this.debugMode = false
 // main game configuration
 const config: GameConfig = {
   width: 800,
