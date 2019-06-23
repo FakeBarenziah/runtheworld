@@ -1,6 +1,6 @@
 import MapMaker from "./MapMaker"
-export default function(){
-  const data = MapMaker()
+export default function(type?:string){
+  const data = MapMaker(type)
   return { "height":150,
   "infinite":false,
   "layers":[
@@ -26,11 +26,11 @@ export default function(){
          {
           "columns":6,
           "firstgid":1,
-          "image":"DesertTiles.png",
+          "image":`${type}`,
           "imageheight":160,
           "imagewidth":192,
           "margin":0,
-          "name":"DesertTiles",
+          "name":type,
           "spacing":0,
           "tilecount":30,
           "tileheight":32,
