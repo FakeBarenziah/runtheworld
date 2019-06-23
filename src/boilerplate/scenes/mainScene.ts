@@ -30,8 +30,6 @@ export class MainScene extends Phaser.Scene {
   public load: any
   public cache: any
   public add: any
-  private background1: any
-  private background2: any
   
   constructor() {
 
@@ -54,8 +52,6 @@ export class MainScene extends Phaser.Scene {
     //Pull in all of our tilesets and backgrounds
     this.load.image('Desert', "./src/boilerplate/assets/DesertTiles.png")
     this.load.image("Castle", "./src/boilerplate/assets/Castle.png")
-
-    this.load.image("MountainBg","./src/boilerplate/assets/MountainBG.png")
 
 
     //Load up the image for our guy
@@ -81,9 +77,6 @@ export class MainScene extends Phaser.Scene {
     //we'll be using mostly c1 for the player and c2 holds the next world
     this.physics.world.bounds.width = 600*32;
     this.physics.world.bounds.height = 150*32;
-
-    this.background1 = this.add.tileSprite(1200-10,150*32-400,0,0,"MountainBg")
-    this.background2 = this.add.tileSprite(2400-10,150*32-400,0,0,"MountainBg")
 
 
     // Input map that enumerates and exposes player input options 
@@ -142,18 +135,6 @@ export class MainScene extends Phaser.Scene {
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
-
-    //paralax
-    if(input.right) {
-      this.background1.x += 1
-      this.background2.x += 1
-
-    }
-    if(input.left) {
-      this.background1.x -= 1
-      this.background2.x -= 1
-
-    }
 
 
     //load in a new chunk if we're far enough along

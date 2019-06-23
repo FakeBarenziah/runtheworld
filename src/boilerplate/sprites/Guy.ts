@@ -5,7 +5,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
   public type: string
   public x: number
   public flipX: boolean
-
+  public setScale: any
 
   constructor(config: any) {
 
