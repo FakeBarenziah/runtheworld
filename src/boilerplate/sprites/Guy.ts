@@ -6,6 +6,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
   public x: number
   public flipX: boolean
   public setScale: any
+  public anims:any
 
   constructor(config: any) {
 
@@ -48,7 +49,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
   }
 
 
-  
+
   }
   run(vel: number) {
     this.body.setVelocityX(vel);
