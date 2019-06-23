@@ -2,6 +2,7 @@ const MapMaker= (type:string):Array<number> =>{
   const outArray = [];
   const colsArray = [];
 
+
   function levelCheck(aVal:number):boolean{
     return aVal>0
   };
@@ -16,17 +17,21 @@ const MapMaker= (type:string):Array<number> =>{
     let levelOffset:number
 
 
-    if(level===140){
+    if(level>=140){
 
-      levelOffset = -1
+      levelOffset = -2
 
-    }else if (i>280&&type!=="Castle"){
+    } else if (level<=10){
+      levelOffset = 2
+    }
+     else if (i>280&&type!=="Castle"){
       if(level>125){
         levelOffset=-1
-      }else if(level<125){
+      } else if(level<125){
         levelOffset=1
+      } else{
+        levelOffset = 0
       }
-      else{levelOffset = 0}
 
     } else if(type==="Castle"){
 
