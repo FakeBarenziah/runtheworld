@@ -98,7 +98,7 @@ export class MainScene extends Phaser.Scene {
       x:15*32,
       y:120*32
     })
-    var walkFrames = this.anims.generateFrameNames("RoboGuy", {start:0, end:5, prefix:"RoboGuysplit-", suffix:".png"})
+    var walkFrames = this.anims.generateFrameNames("RoboGuy", {start:1, end:5, prefix:"RoboGuysplit-", suffix:".png"})
     this.anims.create({
       key:"walk",
       frames:walkFrames,
@@ -153,7 +153,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     this.cameras.main.zoom = 1/this.zoom
-    this.guy.setScale(this.zoom)
+    this.guy.setScale(this.zoom*2)
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
 
 
