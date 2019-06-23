@@ -30,7 +30,8 @@ export class MainScene extends Phaser.Scene {
   public load: any
   public cache: any
   public add: any
-  
+  public anims:any
+
   constructor() {
 
     super({
@@ -55,17 +56,18 @@ export class MainScene extends Phaser.Scene {
 
 
     //Load up the image for our guy
-    this.load.image('guy', "./src/boilerplate/assets/guy.png");
+    this.load.multiatlas('RoboGuy', "./src/boilerplate/assets/RoboSprites.json", "./src/boilerplate/assets");
+    // console.log(this.cache)
   }
 
 
   create(): void {
 
-    
+
     //Generates Layers for w1 and w2
     var map1 = this.make.tilemap({key: 'map1'})
     var map2 = this.make.tilemap({key: 'map2'})
-    
+
     var groundTile1 = map1.addTilesetImage('Castle')
     var groundTile2 = map2.addTilesetImage('Castle')
 
@@ -79,7 +81,7 @@ export class MainScene extends Phaser.Scene {
     this.physics.world.bounds.height = 150*32;
 
 
-    // Input map that enumerates and exposes player input options 
+    // Input map that enumerates and exposes player input options
     this.keys = {
       jump: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
       right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
@@ -92,11 +94,23 @@ export class MainScene extends Phaser.Scene {
     // Makes our guy and adds him to the scene
     this.guy = new Guy({
       scene:this,
-      key:"guy",
+      key:"RoboGuy",
       x:15*32,
       y:120*32
     })
-
+    var walkFrames = this.anims.generateFrameNames("RoboGuy", {start:1, end:5, prefix:"RoboGuysplit-", suffix:".png"})
+    this.anims.create({
+      key:"walk",
+      frames:walkFrames,
+      frameRate:20
+    })
+    var standFrames = this.anims.generateFrameNames("RoboGuy", {start:0, end:0, prefix:"RoboGuysplit-", suffix:".png"})
+    this.anims.create({
+      key:"stand",
+      frames:standFrames,
+      frameRate:20
+    })
+    this.guy.anims.play("walk", this.guy)
 
     //handle collision setup for layers and our guy
     map1.setCollisionByProperty({"Collides":true}, true, true)
@@ -117,6 +131,7 @@ export class MainScene extends Phaser.Scene {
     this.physics.collide(this.guy, this.groundLayer2 )
 
 
+
     //control zoom level and update game state based on zoom
     let input =  {
       big: this.keys.big.isDown,
@@ -124,6 +139,11 @@ export class MainScene extends Phaser.Scene {
       left: this.keys.left.isDown,
       right: this.keys.right.isDown
     };
+
+    //This if statement choosed the animation to play based on whether the player is walking or not
+    if(input.left || input.right){
+    this.guy.anims.play("walk", this.guy)
+    } else this.guy.anims.play("stand", this.guy)
 
     if(input.big && this.zoom < 5){
      this.zoom += .05
@@ -133,7 +153,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     this.cameras.main.zoom = 1/this.zoom
-    this.guy.setScale(this.zoom)
+    this.guy.setScale(this.zoom*2)
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
 
 
@@ -155,7 +175,7 @@ export class MainScene extends Phaser.Scene {
 
       this.loadNewMap()
     }
-    
+
     this.guy.update(this.keys, time, delta, this.zoom)
 
   }
@@ -166,7 +186,7 @@ export class MainScene extends Phaser.Scene {
     var nextMap = this.make.tilemap({key: `map${this.world}`})
 
     if(this.world%2){
- 
+
      var groundTile1 = nextMap.addTilesetImage('Castle')
      this.groundLayer1 = nextMap.createDynamicLayer('Tile Layer 1', groundTile1, 300*32, 0);
 
@@ -175,7 +195,7 @@ export class MainScene extends Phaser.Scene {
      this.physics.add.collider(this.guy,this.groundLayer1)
 
     } else{
- 
+
      var groundTile2 = nextMap.addTilesetImage('Desert')
      this.groundLayer2 = nextMap.createDynamicLayer('Tile Layer 1', groundTile2, 300*32, 0);
 
