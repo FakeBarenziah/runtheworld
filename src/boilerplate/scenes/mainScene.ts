@@ -19,8 +19,8 @@ export class MainScene extends Phaser.Scene {
 
   private keys: keysObj
   private guy: Guy
-  private groundLayer1: Phaser.Tilemaps.DynamicTilemapLayer
-  private groundLayer2: Phaser.Tilemaps.DynamicTilemapLayer
+  private groundLayer1: Phaser.Tilemaps.StaticTilemapLayer
+  private groundLayer2: Phaser.Tilemaps.StaticTilemapLayer
   private zoom: number
   private world: number
   public physics: any
@@ -31,6 +31,7 @@ export class MainScene extends Phaser.Scene {
   public cache: any
   public add: any
   public anims:any
+  private terrainTypes:Array<string>
 
   constructor() {
 
@@ -39,19 +40,15 @@ export class MainScene extends Phaser.Scene {
     });
 
     this.zoom = 1.0
-    this.world = 2
+    this.world = 3
+    this.terrainTypes = ["Desert", "Castle"]
   }
 
 
   preload(): void {
 
-    ///Generate two random chunks
-    this.cache.tilemap.entries.entries.map1 = {"format":1,"data":Stringer("Castle")}
-    this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer("Castle")}
-
-
     //Pull in all of our tilesets and backgrounds
-    this.load.image('Desert', "./src/boilerplate/assets/DesertTiles.png")
+    this.load.image('Desert', "./src/boilerplate/assets/Desert.png")
     this.load.image("Castle", "./src/boilerplate/assets/Castle.png")
 
 
@@ -63,16 +60,21 @@ export class MainScene extends Phaser.Scene {
 
   create(): void {
 
+    ///Generate two random chunks
+    var terrain1 = this.terrainTypes[Math.floor(Math.random()*this.terrainTypes.length)]
+    this.cache.tilemap.entries.entries.map1 = {"format":1,"data":Stringer(terrain1)}
+    var terrain2 = this.terrainTypes[Math.floor(Math.random()*this.terrainTypes.length)]
+    this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer(terrain2)}
 
     //Generates Layers for w1 and w2
     var map1 = this.make.tilemap({key: 'map1'})
     var map2 = this.make.tilemap({key: 'map2'})
 
-    var groundTile1 = map1.addTilesetImage('Castle')
-    var groundTile2 = map2.addTilesetImage('Castle')
+    var groundTile1 = map1.addTilesetImage(terrain1)
+    var groundTile2 = map2.addTilesetImage(terrain2)
 
-    this.groundLayer1 = map1.createDynamicLayer('Tile Layer 1', groundTile1, 0, 0);
-    this.groundLayer2 = map2.createDynamicLayer('Tile Layer 1', groundTile2, 300*32, 0);
+    this.groundLayer1 = map1.createStaticLayer('Tile Layer 1', groundTile1, 0, 0);
+    this.groundLayer2 = map2.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0);
 
 
     // Sets up a Phaser world that's two chunks wide and one chunk high
@@ -147,7 +149,7 @@ export class MainScene extends Phaser.Scene {
 
     if(input.big && this.zoom < 5){
      this.zoom += .05
-    }``
+    }
     if(input.small && this.zoom > .2){
       this.zoom -= .05
     }
@@ -181,23 +183,24 @@ export class MainScene extends Phaser.Scene {
   }
 
   loadNewMap(): void {
+    var nextTerrain = this.terrainTypes[Math.floor(Math.random()*this.terrainTypes.length)]
 
-    this.cache.tilemap.entries.entries[`map${this.world}`] = {"format":1,"data":Stringer("Castle")}
+    this.cache.tilemap.entries.entries[`map${this.world}`] = {"format":1,"data":Stringer(nextTerrain)}
     var nextMap = this.make.tilemap({key: `map${this.world}`})
 
     if(this.world%2){
-
-     var groundTile1 = nextMap.addTilesetImage('Castle')
-     this.groundLayer1 = nextMap.createDynamicLayer('Tile Layer 1', groundTile1, 300*32, 0);
+      this.groundLayer1.visible = false
+     var groundTile1 = nextMap.addTilesetImage(nextTerrain)
+     this.groundLayer1 = nextMap.createStaticLayer('Tile Layer 1', groundTile1, 300*32, 0);
 
     //make sure collision data is up to date
      nextMap.setCollisionByProperty({"Collides":true}, true, true)
      this.physics.add.collider(this.guy,this.groundLayer1)
 
     } else{
-
-     var groundTile2 = nextMap.addTilesetImage('Desert')
-     this.groundLayer2 = nextMap.createDynamicLayer('Tile Layer 1', groundTile2, 300*32, 0);
+      this.groundLayer2.visible = false
+     var groundTile2 = nextMap.addTilesetImage(nextTerrain)
+     this.groundLayer2 = nextMap.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0);
 
      //make sure collision data is up to date
      nextMap.setCollisionByProperty({"Collides":true}, true, true)

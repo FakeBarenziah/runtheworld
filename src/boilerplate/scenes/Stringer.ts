@@ -1,5 +1,5 @@
 import MapMaker from "./MapMaker"
-export default function(type?:string){
+export default function(type:string){
   const data = MapMaker(type)
   return { "height":150,
   "infinite":false,
