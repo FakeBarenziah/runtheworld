@@ -48,26 +48,27 @@ table {
 }
 
 body {
-    background: #0d0d1d;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-h1{
-    color: #ffffff;
-    font-size: 64px;
+    background: #0d0d0d;
 }
 
 .navbar{
-    text-align: center;
-   background: #1d1d2d;
-}
-.container{
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 60px;
+    width: 100%;
+    background: #1d1d2d;
+    z-index: 2;
+}
+.container{
+    position:fixed;
+    top: 20px;
+    width: 60%;
+    right:20%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
 
 }

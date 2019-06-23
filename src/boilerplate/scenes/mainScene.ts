@@ -88,7 +88,7 @@ export class MainScene extends Phaser.Scene {
     this.guy = new Guy({
       scene:this,
       key:"guy",
-      x:30,
+      x:15*32,
       y:120*32
     })
 
