@@ -4,6 +4,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
   public body: any
   public type: string
   public x: number
+  public flipX: boolean
 
 
   constructor(config: any) {
@@ -11,7 +12,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
     super(config.scene, config.x, config.y, config.key)
         config.scene.physics.world.enable(this);
         config.scene.add.existing(this);
-        this.acceleration = 600;
+        this.acceleration = 1200;
         this.body.maxVelocity.x = 200;
         this.body.maxVelocity.y = 500;
         this.body.checkCollision.up = false;
@@ -55,6 +56,6 @@ export default class Guy extends Phaser.GameObjects.Sprite{
 
 
   jump(zoom: number) {
-    this.body.setVelocityY(-200*Math.sqrt(zoom))
+    this.body.setVelocityY(-450*Math.sqrt(zoom))
   }
 }

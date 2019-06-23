@@ -29,7 +29,9 @@ export class MainScene extends Phaser.Scene {
   public make: any
   public load: any
   public cache: any
-
+  public add: any
+  private background1: any
+  private background2: any
   
   constructor() {
 
@@ -49,9 +51,11 @@ export class MainScene extends Phaser.Scene {
     this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer("Castle")}
 
 
-    //Pull in all of our tilesets
-    this.load.image('DesertTiles', "./src/boilerplate/assets/DesertTiles.png")
+    //Pull in all of our tilesets and backgrounds
+    this.load.image('Desert', "./src/boilerplate/assets/DesertTiles.png")
     this.load.image("Castle", "./src/boilerplate/assets/Castle.png")
+
+    this.load.image("MountainBg","./src/boilerplate/assets/MountainBG.png")
 
 
     //Load up the image for our guy
@@ -60,6 +64,7 @@ export class MainScene extends Phaser.Scene {
 
 
   create(): void {
+
     
     //Generates Layers for w1 and w2
     var map1 = this.make.tilemap({key: 'map1'})
@@ -76,6 +81,9 @@ export class MainScene extends Phaser.Scene {
     //we'll be using mostly c1 for the player and c2 holds the next world
     this.physics.world.bounds.width = 600*32;
     this.physics.world.bounds.height = 150*32;
+
+    this.background1 = this.add.tileSprite(1200-10,150*32-400,0,0,"MountainBg")
+    this.background2 = this.add.tileSprite(2400-10,150*32-400,0,0,"MountainBg")
 
 
     // Input map that enumerates and exposes player input options 
@@ -111,28 +119,45 @@ export class MainScene extends Phaser.Scene {
 
 
   update(time, delta):void {
-
+    //use those colliders!
     this.physics.collide(this.guy, this.groundLayer1 )
     this.physics.collide(this.guy, this.groundLayer2 )
 
-    this.guy.update(this.keys, time, delta, this.zoom)
+
+    //control zoom level and update game state based on zoom
     let input =  {
       big: this.keys.big.isDown,
       small: this.keys.small.isDown,
+      left: this.keys.left.isDown,
+      right: this.keys.right.isDown
     };
+
     if(input.big && this.zoom < 5){
      this.zoom += .05
     }``
     if(input.small && this.zoom > .2){
       this.zoom -= .05
     }
+
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
 
-    if(this.guy.x > 350*32 && !(this.world%2)){
+    //paralax
+    if(input.right) {
+      this.background1.x += 1
+      this.background2.x += 1
 
-      this.world += 1
+    }
+    if(input.left) {
+      this.background1.x -= 1
+      this.background2.x -= 1
+
+    }
+
+
+    //load in a new chunk if we're far enough along
+    if(this.guy.x > 350*32 && !(this.world%2)){
 
       this.groundLayer1.x = 300*32
       this.groundLayer2.x = 0
@@ -143,18 +168,18 @@ export class MainScene extends Phaser.Scene {
 
     if(this.guy.x > 350*32 && this.world%2){
 
-      this.world += 1
-
       this.groundLayer2.x = 300*32
       this.groundLayer1.x = 0
       this.guy.x -= 300*32
 
       this.loadNewMap()
     }
+    
+    this.guy.update(this.keys, time, delta, this.zoom)
 
   }
 
-  loadNewMap(){
+  loadNewMap(): void {
 
     this.cache.tilemap.entries.entries[`map${this.world}`] = {"format":1,"data":Stringer("Castle")}
     var nextMap = this.make.tilemap({key: `map${this.world}`})
@@ -170,13 +195,14 @@ export class MainScene extends Phaser.Scene {
 
     } else{
  
-     var groundTile2 = nextMap.addTilesetImage('DesertTiles')
+     var groundTile2 = nextMap.addTilesetImage('Desert')
      this.groundLayer2 = nextMap.createDynamicLayer('Tile Layer 1', groundTile2, 300*32, 0);
 
      //make sure collision data is up to date
      nextMap.setCollisionByProperty({"Collides":true}, true, true)
      this.physics.add.collider(this.guy,this.groundLayer2)
     }
+    ++this.world
   }
 }
 
