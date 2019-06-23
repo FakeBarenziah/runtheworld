@@ -19,8 +19,7 @@ export class MainScene extends Phaser.Scene {
 
   private keys: keysObj
   private guy: Guy
-  private groundLayer1: Phaser.Tilemaps.StaticTilemapLayer
-  private groundLayer2: Phaser.Tilemaps.StaticTilemapLayer
+  private groundLayers: Array<Phaser.Tilemaps.StaticTilemapLayer>
   private zoom: number
   private world: number
   public physics: any
@@ -32,6 +31,7 @@ export class MainScene extends Phaser.Scene {
   public add: any
   public anims:any
   private terrainTypes:Array<string>
+  private currentWorld: number
 
   constructor() {
 
@@ -40,7 +40,8 @@ export class MainScene extends Phaser.Scene {
     });
 
     this.zoom = 1.0
-    this.world = 3
+    this.world = 2
+    this.currentWorld = 0
     this.terrainTypes = ["Desert", "Castle"]
   }
 
@@ -73,8 +74,8 @@ export class MainScene extends Phaser.Scene {
     var groundTile1 = map1.addTilesetImage(terrain1)
     var groundTile2 = map2.addTilesetImage(terrain2)
 
-    this.groundLayer1 = map1.createStaticLayer('Tile Layer 1', groundTile1, 0, 0);
-    this.groundLayer2 = map2.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0);
+    this.groundLayers = [map1.createStaticLayer('Tile Layer 1', groundTile1, 0, 0)];
+    this.groundLayers.push(map2.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0))
 
 
     // Sets up a Phaser world that's two chunks wide and one chunk high
@@ -97,7 +98,7 @@ export class MainScene extends Phaser.Scene {
     this.guy = new Guy({
       scene:this,
       key:"RoboGuy",
-      x:15*32,
+      x:150*32,
       y:120*32
     })
     var walkFrames = this.anims.generateFrameNames("RoboGuy", {start:1, end:5, prefix:"RoboGuysplit-", suffix:".png"})
@@ -122,15 +123,15 @@ export class MainScene extends Phaser.Scene {
     this.guy.body.setBounce(.2)
 
     //Critical for consistent collisions!
-    this.physics.add.collider(this.guy,this.groundLayer1)
-    this.physics.add.collider(this.guy,this.groundLayer2)
+    this.physics.add.collider(this.guy,this.groundLayers[0])
+    this.physics.add.collider(this.guy,this.groundLayers[1])
   }
 
 
   update(time, delta):void {
     //use those colliders!
-    this.physics.collide(this.guy, this.groundLayer1 )
-    this.physics.collide(this.guy, this.groundLayer2 )
+    this.groundLayers.forEach(layer => {
+      this.physics.collide(this.guy, layer)})
 
 
 
@@ -160,53 +161,61 @@ export class MainScene extends Phaser.Scene {
 
 
     //load in a new chunk if we're far enough along
-    if(this.guy.x > 350*32 && !(this.world%2)){
+    if(this.guy.x > 500*32){
 
-      this.groundLayer1.x = 300*32
-      this.groundLayer2.x = 0
+      this.currentWorld++
+
+      this.groundLayers.forEach(layer => {
+        layer.x-=300*32
+      })
+
       this.guy.x -= 300*32
 
-      this.loadNewMap()
+      if(this.currentWorld===this.world-1){
+        this.loadNewMap(false)}
+
     }
 
-    if(this.guy.x > 350*32 && this.world%2){
+    if(this.guy.x < 100*32){
 
-      this.groundLayer2.x = 300*32
-      this.groundLayer1.x = 0
-      this.guy.x -= 300*32
+      this.groundLayers.forEach(layer => {
+        layer.x+=300*32
+      })
 
-      this.loadNewMap()
+      this.guy.x += 300*32
+
+      if(this.currentWorld===0){
+        this.loadNewMap(true)
+      }else{this.currentWorld--}
     }
 
     this.guy.update(this.keys, time, delta, this.zoom)
 
   }
 
-  loadNewMap(): void {
+  loadNewMap(left:boolean): void {
     var nextTerrain = this.terrainTypes[Math.floor(Math.random()*this.terrainTypes.length)]
 
     this.cache.tilemap.entries.entries[`map${this.world}`] = {"format":1,"data":Stringer(nextTerrain)}
     var nextMap = this.make.tilemap({key: `map${this.world}`})
 
-    if(this.world%2){
-      this.groundLayer1.visible = false
+    if(left){
      var groundTile1 = nextMap.addTilesetImage(nextTerrain)
-     this.groundLayer1 = nextMap.createStaticLayer('Tile Layer 1', groundTile1, 300*32, 0);
+     this.groundLayers.unshift(nextMap.createStaticLayer('Tile Layer 1', groundTile1, 0, 0));
 
     //make sure collision data is up to date
      nextMap.setCollisionByProperty({"Collides":true}, true, true)
-     this.physics.add.collider(this.guy,this.groundLayer1)
+     this.physics.add.collider(this.guy,this.groundLayers[0])
 
     } else{
-      this.groundLayer2.visible = false
      var groundTile2 = nextMap.addTilesetImage(nextTerrain)
-     this.groundLayer2 = nextMap.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0);
+     this.groundLayers.push(nextMap.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0));
 
      //make sure collision data is up to date
      nextMap.setCollisionByProperty({"Collides":true}, true, true)
-     this.physics.add.collider(this.guy,this.groundLayer2)
+     this.physics.add.collider(this.guy,this.groundLayers[this.world-1])
     }
-    ++this.world
+    this.world++
   }
 }
 
