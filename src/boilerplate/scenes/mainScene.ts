@@ -42,22 +42,23 @@ export class MainScene extends Phaser.Scene {
   preload(): void {
     // this.load.tilemapTiledJSON('map1', './src/boilerplate/assets/mapTemplate.json')
     // Load the map as JSON from the file created by Tiled
-    this.cache.tilemap.entries.entries.map1 = {"format":1,"data":Stringer()}
+    this.cache.tilemap.entries.entries.map1 = {"format":1,"data":Stringer("Castle")}
 
     console.log(this)
     this.load.image('DesertTiles', "./src/boilerplate/assets/DesertTiles.png")
+    this.load.image("Castle", "./src/boilerplate/assets/Castle.png")
 
-    this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer()}
+    this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer("Castle")}
     // Loads the image that was tiled
     this.load.image('guy', "./src/boilerplate/assets/guy.png");
 
   }
   create(): void {
     var map1 = this.make.tilemap({key: 'map1'})
-    var groundTile1 = map1.addTilesetImage('DesertTiles')
+    var groundTile1 = map1.addTilesetImage('Castle')
     // 'world' image used as a tileset from preload
     var map2 = this.make.tilemap({key: 'map2'})
-    var groundTile2 = map2.addTilesetImage('DesertTiles')
+    var groundTile2 = map2.addTilesetImage('Castle')
 
     this.groundLayer1 = map1.createStaticLayer('Tile Layer 1', groundTile1, 0, 0);
     this.groundLayer2 = map2.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0);
@@ -148,7 +149,7 @@ export class MainScene extends Phaser.Scene {
 
   loadNewMap(){
 
-    this.cache.tilemap.entries.entries[`map${this.world}`] = {"format":1,"data":Stringer()}
+    this.cache.tilemap.entries.entries[`map${this.world}`] = {"format":1,"data":Stringer("Castle")}
 
     // this.load.start()
 
@@ -161,7 +162,7 @@ export class MainScene extends Phaser.Scene {
 
    if(this.world%2){
 
-    var groundTile1 = nextMap.addTilesetImage('DesertTiles')
+    var groundTile1 = nextMap.addTilesetImage('Castle')
 
     this.groundLayer1 = nextMap.createStaticLayer('Tile Layer 1', groundTile1, 300*32, 0);
 
@@ -169,7 +170,7 @@ export class MainScene extends Phaser.Scene {
 
    } else{
 
-    var groundTile2 = nextMap.addTilesetImage('DesertTiles')
+    var groundTile2 = nextMap.addTilesetImage('Castle')
 
     this.groundLayer2 = nextMap.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0);
 
