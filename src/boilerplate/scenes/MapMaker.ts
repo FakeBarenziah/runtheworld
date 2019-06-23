@@ -1,4 +1,4 @@
-const MapMaker= ():Array<number> =>{
+const MapMaker= (type?:string):Array<number> =>{
   const outArray = [];
   const colsArray = [];
 
@@ -6,11 +6,21 @@ const MapMaker= ():Array<number> =>{
     return aVal>0
   };
 
-  let level:number = 125;
+  let level:number = 145;
 
   for (let i=0; i < 300; i++){
 
-    const levelOffset:number = Math.floor((Math.random()*3)-1);
+    let levelOffset:number
+    if(level===149){
+      levelOffset = 1
+    } else if(type==="Castle"){
+      levelOffset = 0
+    } else if(type==="Desert") {
+      levelOffset = Math.floor((Math.random()*3)-1);
+    } else if (type==="Mountain") {
+      levelOffset = Math.floor((Math.random()*5)-2);
+
+    }
 
     const column:number[] = [];
 
