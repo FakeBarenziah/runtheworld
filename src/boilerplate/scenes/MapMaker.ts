@@ -1,4 +1,4 @@
-const MapMaker= (type?:string):Array<number> =>{
+const MapMaker= (type:string):Array<number> =>{
   const outArray = [];
   const colsArray = [];
 
@@ -6,7 +6,7 @@ const MapMaker= (type?:string):Array<number> =>{
     return aVal>0
   };
 
-  let level:number = 145;
+  let level:number = 125;
 
   for (let i=0; i < 300; i++){
 

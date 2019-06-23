@@ -13,8 +13,8 @@ export default class Guy extends Phaser.GameObjects.Sprite{
     super(config.scene, config.x, config.y, config.key)
         config.scene.physics.world.enable(this);
         config.scene.add.existing(this);
-        this.acceleration = 1200;
-        this.body.maxVelocity.x = 200;
+        this.acceleration = 600;
+        this.body.maxVelocity.x = 6000;
         this.body.maxVelocity.y = 500;
         this.body.checkCollision.up = false;
         this.type = 'guy';
@@ -33,11 +33,11 @@ export default class Guy extends Phaser.GameObjects.Sprite{
 
     //control logic
     if (input.left) {
-      this.run(-this.acceleration*zoom);
+      this.run(-this.acceleration*Math.max(1, zoom**2));
       this.flipX = true;
     }
     else if (input.right) {
-      this.run(this.acceleration*zoom);
+      this.run(this.acceleration*Math.max(1, zoom**2));
       this.flipX = false;
     }
     else {
