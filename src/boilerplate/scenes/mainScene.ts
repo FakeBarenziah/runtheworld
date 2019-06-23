@@ -1,10 +1,7 @@
 import Guy from "../sprites/Guy";
-// import { Z_DEFAULT_COMPRESSION } from "zlib";
-// import Phaser from "phaser"
 import Stringer from "./Stringer"
-import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
 
-/**
+/** Boilerplate credits!
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
  * @copyright    2018 - 2019 digitsensitive
  * @license      Digitsensitive
@@ -16,25 +13,34 @@ interface keysObj {
   left: any,
   big: any,
   small: any
-
 }
 
 export class MainScene extends Phaser.Scene {
-  private phaserSprite: Phaser.GameObjects.Sprite;
+
   private keys: keysObj
   private guy: Guy
   private groundLayer1: Phaser.Tilemaps.DynamicTilemapLayer
   private groundLayer2: Phaser.Tilemaps.DynamicTilemapLayer
   private zoom: number
   private world: number
+  public physics: any
+  public input: any
+  public cameras: any
+  public make: any
+  public load: any
+  public cache: any
+
   
   constructor() {
+
     super({
       key: "MainScene"
     });
+
     this.zoom = 1.0
     this.world = 2
   }
+
 
   preload(): void {
 
@@ -48,8 +54,9 @@ export class MainScene extends Phaser.Scene {
     //Load up the image for our guy
     this.load.image('guy', "./src/boilerplate/assets/guy.png");
   }
+
+
   create(): void {
-    
     
     //Generates Layers for w1 and w2
     var map1 = this.make.tilemap({key: 'map1'})
