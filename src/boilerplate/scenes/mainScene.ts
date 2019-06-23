@@ -1,10 +1,7 @@
 import Guy from "../sprites/Guy";
-// import { Z_DEFAULT_COMPRESSION } from "zlib";
-// import Phaser from "phaser"
 import Stringer from "./Stringer"
-import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
 
-/**
+/** Boilerplate credits!
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
  * @copyright    2018 - 2019 digitsensitive
  * @license      Digitsensitive
@@ -16,62 +13,73 @@ interface keysObj {
   left: any,
   big: any,
   small: any
-
 }
 
 export class MainScene extends Phaser.Scene {
-  private phaserSprite: Phaser.GameObjects.Sprite;
+
   private keys: keysObj
   private guy: Guy
-  private groundLayer1: Phaser.Tilemaps.StaticTilemapLayer
-  private groundLayer2: Phaser.Tilemaps.StaticTilemapLayer
-  private toggle: Boolean
+  private groundLayer1: Phaser.Tilemaps.DynamicTilemapLayer
+  private groundLayer2: Phaser.Tilemaps.DynamicTilemapLayer
   private zoom: number
   private world: number
-  private hotLoad: Boolean
+  public physics: any
+  public input: any
+  public cameras: any
+  public make: any
+  public load: any
+  public cache: any
+  public add: any
+  
   constructor() {
+
     super({
       key: "MainScene"
     });
+
     this.zoom = 1.0
-    this.toggle = false
     this.world = 2
-    this.hotLoad = false
   }
+
 
   preload(): void {
-    // this.load.tilemapTiledJSON('map1', './src/boilerplate/assets/mapTemplate.json')
-    // Load the map as JSON from the file created by Tiled
-    this.cache.tilemap.entries.entries.map1 = {"format":1,"data":Stringer("Castle")}
 
-    console.log(this)
-    this.load.image('DesertTiles', "./src/boilerplate/assets/DesertTiles.png")
+    ///Generate two random chunks
+    this.cache.tilemap.entries.entries.map1 = {"format":1,"data":Stringer("Castle")}
+    this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer("Castle")}
+
+
+    //Pull in all of our tilesets and backgrounds
+    this.load.image('Desert', "./src/boilerplate/assets/DesertTiles.png")
     this.load.image("Castle", "./src/boilerplate/assets/Castle.png")
 
-    this.cache.tilemap.entries.entries.map2 = {"format":1,"data":Stringer("Castle")}
-    // Loads the image that was tiled
-    this.load.image('guy', "./src/boilerplate/assets/guy.png");
 
+    //Load up the image for our guy
+    this.load.image('guy', "./src/boilerplate/assets/guy.png");
   }
+
+
   create(): void {
+
+    
+    //Generates Layers for w1 and w2
     var map1 = this.make.tilemap({key: 'map1'})
-    var groundTile1 = map1.addTilesetImage('Castle')
-    // 'world' image used as a tileset from preload
     var map2 = this.make.tilemap({key: 'map2'})
+    
+    var groundTile1 = map1.addTilesetImage('Castle')
     var groundTile2 = map2.addTilesetImage('Castle')
 
-    this.groundLayer1 = map1.createStaticLayer('Tile Layer 1', groundTile1, 0, 0);
-    this.groundLayer2 = map2.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0);
-    // Creats a game layer from the name in the map.json file
-    // this.groundLayer.setCollisionByExclusion([-1]);
-    // this.physics.world.enable(this.groundLayer)
-    map1.setCollisionByProperty({"Collides":true}, true, true)
-    map2.setCollisionByProperty({"Collides":true}, true, true)
+    this.groundLayer1 = map1.createDynamicLayer('Tile Layer 1', groundTile1, 0, 0);
+    this.groundLayer2 = map2.createDynamicLayer('Tile Layer 1', groundTile2, 300*32, 0);
 
-    // map.setCollision([1, 2, 3, 4, 5, 6, 7, 8], true, false, this.groundLayer)
 
+    // Sets up a Phaser world that's two chunks wide and one chunk high
+    //we'll be using mostly c1 for the player and c2 holds the next world
     this.physics.world.bounds.width = 600*32;
     this.physics.world.bounds.height = 150*32;
+
+
+    // Input map that enumerates and exposes player input options 
     this.keys = {
       jump: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
       right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
@@ -79,105 +87,103 @@ export class MainScene extends Phaser.Scene {
       big: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
       small: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
     }
+
+
+    // Makes our guy and adds him to the scene
     this.guy = new Guy({
       scene:this,
       key:"guy",
-      x:30,
-      y:120
+      x:15*32,
+      y:120*32
     })
-//    this.cameras.main = new Phaser.Cameras.Scene2D.Effects.Zoom(this.cameras.main)
+
+
+    //handle collision setup for layers and our guy
+    map1.setCollisionByProperty({"Collides":true}, true, true)
+    map2.setCollisionByProperty({"Collides":true}, true, true)
+
     this.guy.body.collideWorldBounds=true;
-    // this.guy.body
+    this.guy.body.setBounce(.2)
 
+    //Critical for consistent collisions!
+    this.physics.add.collider(this.guy,this.groundLayer1)
+    this.physics.add.collider(this.guy,this.groundLayer2)
   }
+
+
   update(time, delta):void {
-
-    if(!this.load.isLoading() && this.hotLoad) this.hotLoader()
-
+    //use those colliders!
     this.physics.collide(this.guy, this.groundLayer1 )
     this.physics.collide(this.guy, this.groundLayer2 )
 
-    this.guy.update(this.keys, time, delta, this.zoom)
+
+    //control zoom level and update game state based on zoom
     let input =  {
       big: this.keys.big.isDown,
       small: this.keys.small.isDown,
+      left: this.keys.left.isDown,
+      right: this.keys.right.isDown
     };
+
     if(input.big && this.zoom < 5){
      this.zoom += .05
     }``
     if(input.small && this.zoom > .2){
       this.zoom -= .05
     }
+
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom)
     this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
 
-    if(this.guy.x > 350*32 && !this.toggle){
 
-      this.world += 1
+    //load in a new chunk if we're far enough along
+    if(this.guy.x > 350*32 && !(this.world%2)){
 
       this.groundLayer1.x = 300*32
-
       this.groundLayer2.x = 0
-
       this.guy.x -= 300*32
 
-
-
       this.loadNewMap()
-
-      this.toggle = !this.toggle
     }
 
-    if(this.guy.x > 350*32 && this.toggle){
-
-      this.world += 1
+    if(this.guy.x > 350*32 && this.world%2){
 
       this.groundLayer2.x = 300*32
-
       this.groundLayer1.x = 0
-
       this.guy.x -= 300*32
 
       this.loadNewMap()
-
-      this.toggle = !this.toggle
-
     }
+    
+    this.guy.update(this.keys, time, delta, this.zoom)
 
   }
 
-  loadNewMap(){
+  loadNewMap(): void {
 
     this.cache.tilemap.entries.entries[`map${this.world}`] = {"format":1,"data":Stringer("Castle")}
-
-    // this.load.start()
-
-    this.hotLoad = true
-  }
-
-  hotLoader(){
-
     var nextMap = this.make.tilemap({key: `map${this.world}`})
 
-   if(this.world%2){
+    if(this.world%2){
+ 
+     var groundTile1 = nextMap.addTilesetImage('Castle')
+     this.groundLayer1 = nextMap.createDynamicLayer('Tile Layer 1', groundTile1, 300*32, 0);
 
-    var groundTile1 = nextMap.addTilesetImage('Castle')
+    //make sure collision data is up to date
+     nextMap.setCollisionByProperty({"Collides":true}, true, true)
+     this.physics.add.collider(this.guy,this.groundLayer1)
 
-    this.groundLayer1 = nextMap.createStaticLayer('Tile Layer 1', groundTile1, 300*32, 0);
+    } else{
+ 
+     var groundTile2 = nextMap.addTilesetImage('Desert')
+     this.groundLayer2 = nextMap.createDynamicLayer('Tile Layer 1', groundTile2, 300*32, 0);
 
-    nextMap.setCollisionByProperty({"Collides":true}, true, true)
-
-   } else{
-
-    var groundTile2 = nextMap.addTilesetImage('Castle')
-
-    this.groundLayer2 = nextMap.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0);
-
-    nextMap.setCollisionByProperty({"Collides":true}, true, true)
-   }
-
-   this.hotLoad = false
+     //make sure collision data is up to date
+     nextMap.setCollisionByProperty({"Collides":true}, true, true)
+     this.physics.add.collider(this.guy,this.groundLayer2)
+    }
+    ++this.world
   }
-
 }
+
