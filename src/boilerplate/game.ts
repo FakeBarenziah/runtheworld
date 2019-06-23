@@ -20,7 +20,7 @@ const config: GameConfig = {
     arcade: {
       gravity: { y: 400 },
       debug: true,
-      TILE_BIAS:16
+      TILE_BIAS:32
 
     }
   }
