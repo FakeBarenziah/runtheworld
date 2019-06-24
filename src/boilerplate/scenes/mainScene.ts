@@ -77,13 +77,13 @@ export class MainScene extends Phaser.Scene {
     var groundTile2 = map2.addTilesetImage(terrain2)
 
     this.groundLayers = [map1.createStaticLayer('Tile Layer 1', groundTile1, 0, 0)];
-    this.groundLayers.push(map2.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0))
+    this.groundLayers.push(map2.createStaticLayer('Tile Layer 1', groundTile2, 150*32, 0))
 
 
     // Sets up a Phaser world that's two chunks wide and one chunk high
     //we'll be using mostly c1 for the player and c2 holds the next world
-    this.physics.world.bounds.width = 600*32;
-    this.physics.world.bounds.height = 150*32;
+    this.physics.world.bounds.width = 300*32;
+    this.physics.world.bounds.height = 100*32;
 
 
     // Input map that enumerates and exposes player input options
@@ -100,8 +100,8 @@ export class MainScene extends Phaser.Scene {
     this.guy = new Guy({
       scene:this,
       key:"RoboGuy",
-      x:150*32,
-      y:120*32
+      x:75*32,
+      y:10*32
     })
     var walkFrames = this.anims.generateFrameNames("RoboGuy", {start:1, end:5, prefix:"RoboGuysplit-", suffix:".png"})
     this.anims.create({
@@ -153,38 +153,38 @@ export class MainScene extends Phaser.Scene {
     if(input.big && this.zoom < 6){
      this.zoom += .05
     }
-    if(input.small && this.zoom > .15){
+    if(input.small && this.zoom > .14){
       this.zoom -= .05
     }
 
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom*2)
-    this.cameras.main.startFollow(this.guy,false,0,0,this.zoom,150*this.zoom)
+    this.cameras.main.startFollow(this.guy,false,0,0,this.zoom,100*this.zoom)
 
 
     //load in a new chunk if we're far enough along
-    if(this.guy.x > 500*32){
+    if(this.guy.x > 240*32){
 
       this.currentWorld++
 
       this.groundLayers.forEach(layer => {
-        layer.x-=300*32
+        layer.x-=150*32
       })
 
-      this.guy.x -= 300*32
+      this.guy.x -= 150*32
 
       if(this.currentWorld===this.world-1){
         this.loadNewMap(false)}
 
     }
 
-    if(this.guy.x < 100*32){
+    if(this.guy.x < 50*32){
 
       this.groundLayers.forEach(layer => {
-        layer.x+=300*32
+        layer.x+=150*32
       })
 
-      this.guy.x += 300*32
+      this.guy.x += 150*32
 
       if(this.currentWorld===0){
         this.loadNewMap(true)
@@ -211,7 +211,7 @@ export class MainScene extends Phaser.Scene {
 
     } else{
      var groundTile2 = nextMap.addTilesetImage(nextTerrain)
-     this.groundLayers.push(nextMap.createStaticLayer('Tile Layer 1', groundTile2, 300*32, 0));
+     this.groundLayers.push(nextMap.createStaticLayer('Tile Layer 1', groundTile2, 150*32, 0));
 
      //make sure collision data is up to date
      nextMap.setCollisionByProperty({"Collides":true}, true, true)

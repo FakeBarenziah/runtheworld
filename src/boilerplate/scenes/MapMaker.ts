@@ -7,27 +7,27 @@ const MapMaker= (type:string):Array<number> =>{
     return aVal>0
   };
 
-  let level:number = 125;
+  let level:number = 80;
 
   let castle_towerflag:boolean = false
   let castle_towerEnd:number
 
-  for (let i=0; i < 300; i++){
+  for (let i=0; i < 150; i++){
 
     let levelOffset:number
 
 
-    if(level>=140){
+    if(level>=90){
 
       levelOffset = -2
 
     } else if (level<=10){
       levelOffset = 2
     }
-     else if (i>280&&type!=="Castle"){
-      if(level>125){
+     else if (i>130&&type!=="Castle"){
+      if(level>80){
         levelOffset=-1
-      } else if(level<125){
+      } else if(level<80){
         levelOffset=1
       } else{
         levelOffset = 0
@@ -37,13 +37,13 @@ const MapMaker= (type:string):Array<number> =>{
 
       levelOffset = 0
 
-      if(i===5||i===290){
+      if(i===5||i===140){
         levelOffset = -40
-      } else if(i===10||i===295){
+      } else if(i===10||i===145){
         levelOffset = 40
       } else {
 
-        if(!castle_towerflag && i > 20 && i < 280){
+        if(!castle_towerflag && i > 20 && i < 140){
         var towerChance = Math.random()
           if(towerChance<0.5 && level<50){
             levelOffset=-5
@@ -68,7 +68,7 @@ const MapMaker= (type:string):Array<number> =>{
 
     const newLevel:number = level + levelOffset
 
-    for(let j=0; j<150; j++){
+    for(let j=0; j<100; j++){
 
       if(j < newLevel){
         column.push(0)
