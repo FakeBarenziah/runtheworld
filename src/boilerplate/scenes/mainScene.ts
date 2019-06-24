@@ -184,18 +184,18 @@ export class MainScene extends Phaser.Scene {
     if(input.small && this.zoom > .15){
       this.zoom -= .05
     }
-    if(input.left){
-      this.layer1.x -= Math.min(600, 100*Math.max(1, this.zoom*2))
-      this.layer2.x -= Math.min(600, 100*Math.max(1, this.zoom*2))/2
-      this.layer3.x -= Math.min(600, 100*Math.max(1, this.zoom*2))/4
-      this.layer4.x -= Math.min(600, 100*Math.max(1, this.zoom*2))/8
+    if(input.left&&!this.guy.body.blocked.left){
+      this.layer1.x -= 3
+      this.layer2.x -= 3/2
+      this.layer3.x -= 3/4
+      this.layer4.x -= 3/8
 
     }
-    if(input.right){
-      this.layer1.x += Math.min(600, 100*Math.max(1, this.zoom*2))
-      this.layer2.x += Math.min(600, 100*Math.max(1, this.zoom*2))/2
-      this.layer3.x += Math.min(600, 100*Math.max(1, this.zoom*2))/4
-      this.layer4.x += Math.min(600, 100*Math.max(1, this.zoom*2))/8
+    if(input.right&&!this.guy.body.blocked.right){
+      this.layer1.x += 3
+      this.layer2.x += 3/2
+      this.layer3.x += 3/4
+      this.layer4.x += 3/8
     }
 
     this.cameras.main.zoom = 1/this.zoom
