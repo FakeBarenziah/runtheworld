@@ -1,13 +1,13 @@
 <p align="center">
   <img width=100% src="Logo.png">
-  Runn the World is an infinite sidescroller with procedurally-generated levels written in TypeScript.
+  Runn the World is an infinite sidescroller with procedurally-generated levels written in TypeScript. The player can grow the sprite to jump over mountains or shrink them down to enjoy our original pixel art close-up!
 </p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 <div align="center">
-  <sub>Original boilerplate made with ❤︎ by <a href="https://github.com/digitsensitive/phaser3-typescript/">digitsensitive</a></br>
+  <sub>Made through collaboration between <a href="https://github.com/EricBot89">Eric Loucks</a> and <a href="https://github.com/FakeBarenziah">Nick Balestrieri.</a></br>Original boilerplate made with ❤︎ by <a href="https://github.com/digitsensitive/phaser3-typescript/">digitsensitive</a></br>
   Framework created by <a href="https://github.com/photonstorm">Photonstorm</a></sub>
 </div>
 
