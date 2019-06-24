@@ -42,7 +42,8 @@ export class MainScene extends Phaser.Scene {
     this.zoom = 1.0
     this.world = 2
     this.currentWorld = 0
-    this.terrainTypes = ["Desert", "Castle", "Town"]
+    this.terrainTypes = ["Mountain"]
+    // this.terrainTypes = ["Desert", "Castle", "Town", "Mountain"]
   }
 
 
@@ -52,6 +53,7 @@ export class MainScene extends Phaser.Scene {
     this.load.image('Desert', "./src/boilerplate/assets/Desert.png")
     this.load.image("Castle", "./src/boilerplate/assets/Castle.png")
     this.load.image("Town", "./src/boilerplate/assets/Town.png")
+    this.load.image("Mountain", "./src/boilerplate/assets/Mountain.png")
 
 
 
