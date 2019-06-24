@@ -51,12 +51,12 @@ npm run dev
 ## Game Screenshots
 
 <p float="left">
-  <img src="https://github.com/FakeBarenziah/runtheworld/DesertScene.png" width="420" />
-  <img src="https://github.com/FakeBarenziah/runtheworld/MountainJumping.png" width="420" />
+  <img src="DesertScene.png" width="420" />
+  <img src="MountainJumping.png" width="420" />
 </p>
 <p float="left">
 
-  <img src="https://github.com/FakeBarenziah/runtheworld/MeetingTheGuru.png" width="420" />
+  <img src="MeetingTheGuru.png" width="420" />
 </p>
 
 ## Adding New Terrains
