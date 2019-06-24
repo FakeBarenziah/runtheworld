@@ -32,6 +32,11 @@ export class MainScene extends Phaser.Scene {
   public anims:any
   private terrainTypes:Array<string>
   private currentWorld: number
+  private layer1:Phaser.Tilemaps.StaticTilemapLayer
+  private layer2:Phaser.Tilemaps.StaticTilemapLayer
+  private layer3:Phaser.Tilemaps.StaticTilemapLayer
+  private layer4:Phaser.Tilemaps.StaticTilemapLayer
+
 
   constructor() {
 
@@ -54,6 +59,13 @@ export class MainScene extends Phaser.Scene {
     this.load.image("Town", "./src/boilerplate/assets/Town.png")
     this.load.image("Mountain", "./src/boilerplate/assets/Mountain.png")
 
+    this.load.image("bgPallette", "./src/boilerplate/assets/BackgroundPallete.png")
+
+    this.load.tilemapTiledJSON("bg1", "./src/boilerplate/assets/bg1.json")
+    this.load.tilemapTiledJSON("bg2", "./src/boilerplate/assets/bg2.json")
+    this.load.tilemapTiledJSON("bg3", "./src/boilerplate/assets/bg3.json")
+    this.load.tilemapTiledJSON("bg4", "./src/boilerplate/assets/bg4.json")
+
 
 
     //Load up the image for our guy
@@ -63,6 +75,21 @@ export class MainScene extends Phaser.Scene {
 
 
   create(): void {
+
+    var bgMap1 = this.make.tilemap({key:"bg1"})
+    var bgMap2 = this.make.tilemap({key:"bg2"})
+    var bgMap3 = this.make.tilemap({key:"bg3"})
+    var bgMap4 = this.make.tilemap({key:"bg4"})
+
+    var backgroundTileset1 = bgMap1.addTilesetImage("bgPallette")
+    var backgroundTileset2 = bgMap2.addTilesetImage("bgPallette")
+    var backgroundTileset3 = bgMap3.addTilesetImage("bgPallette")
+    var backgroundTileset4 = bgMap4.addTilesetImage("bgPallette")
+
+    this.layer1 = bgMap1.createStaticLayer("Tile Layer 1", backgroundTileset1, 0, 0)
+    this.layer2 = bgMap2.createStaticLayer("Tile Layer 1", backgroundTileset2, 0, 0)
+    this.layer3 = bgMap3.createStaticLayer("Tile Layer 1", backgroundTileset3, 0, 0)
+    this.layer4 = bgMap4.createStaticLayer("Tile Layer 1", backgroundTileset4, 0, 0)
 
     ///Generate two random chunks
     var terrain1 = this.terrainTypes[Math.floor(Math.random()*this.terrainTypes.length)]
@@ -156,6 +183,19 @@ export class MainScene extends Phaser.Scene {
     }
     if(input.small && this.zoom > .15){
       this.zoom -= .05
+    }
+    if(input.left){
+      this.layer1.x -= Math.min(600, 100*Math.max(1, this.zoom*2))
+      this.layer2.x -= Math.min(600, 100*Math.max(1, this.zoom*2))/2
+      this.layer3.x -= Math.min(600, 100*Math.max(1, this.zoom*2))/4
+      this.layer4.x -= Math.min(600, 100*Math.max(1, this.zoom*2))/8
+
+    }
+    if(input.right){
+      this.layer1.x += Math.min(600, 100*Math.max(1, this.zoom*2))
+      this.layer2.x += Math.min(600, 100*Math.max(1, this.zoom*2))/2
+      this.layer3.x += Math.min(600, 100*Math.max(1, this.zoom*2))/4
+      this.layer4.x += Math.min(600, 100*Math.max(1, this.zoom*2))/8
     }
 
     this.cameras.main.zoom = 1/this.zoom
