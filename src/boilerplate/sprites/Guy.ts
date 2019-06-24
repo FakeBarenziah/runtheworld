@@ -21,7 +21,7 @@ export default class Guy extends Phaser.GameObjects.Sprite{
   }
 
 
-  update(keys, time, delta,zoom: number){
+  update(keys, time, delta, zoom: number){
 
     //input map from parent's keys for semantics
     let input = {

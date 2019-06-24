@@ -187,7 +187,7 @@ export class MainScene extends Phaser.Scene {
       right: this.keys.right.isDown
     };
 
-    //This if statement choosed the animation to play based on whether the player is walking or not
+    //This if statement chooses the animation to play based on whether the player is walking or not
     if(input.left || input.right){
     this.guy.anims.play("walk", this.guy)
     } else this.guy.anims.play("stand", this.guy)
