@@ -150,16 +150,16 @@ export class MainScene extends Phaser.Scene {
     this.guy.anims.play("walk", this.guy)
     } else this.guy.anims.play("stand", this.guy)
 
-    if(input.big && this.zoom < 5){
+    if(input.big && this.zoom < 6){
      this.zoom += .05
     }
-    if(input.small && this.zoom > .2){
+    if(input.small && this.zoom > .15){
       this.zoom -= .05
     }
 
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom*2)
-    this.cameras.main.startFollow(this.guy,false,0,0,-300*this.zoom,200*this.zoom)
+    this.cameras.main.startFollow(this.guy,false,0,0,this.zoom,150*this.zoom)
 
 
     //load in a new chunk if we're far enough along
