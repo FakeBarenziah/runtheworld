@@ -15,12 +15,7 @@
 
 [Phaser](https://github.com/photonstorm/phaser) is a wonderful, fast and
 free open source HTML5 game framework.
-It's used here with Typescript to enhance maintainability and understandability. New sets of 27 tiles at 32x32 pixels can be added into /src/boilerplate/assets, and then by adding the path in a load statement below line 52 of /src/boilerplate/scenes/mainScene.ts and adding the key into the array on line 45.
-
-<div align="center">
-<a href="https://www.buymeacoffee.com/JZDVjsT26" target="blank">
-<img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important; width: auto !important;"></a>
-</div>
+It's used here with Typescript to enhance maintainability and understandability.
 
 ## Getting started
 
@@ -36,7 +31,7 @@ Select a folder, navigate to it, and clone this repository
 with this command-line:
 
 ```
-git clone https://github.com/digitsensitive/phaser3-typescript.git
+git clone https://github.com/FakeBarenziah/runtheworld.git
 ```
 
 Install the dependencies with this command-line:
@@ -53,39 +48,22 @@ Perform a quick build (bundle.js) and start server:
 npm run dev
 ```
 
-## Game Examples
-
-![Beginner](https://img.shields.io/badge/Difficulty-Beginner-green.svg)
+## Game Screenshots
 
 <p float="left">
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/coin-runner/coin-runner.md"><img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/coin-runner/assets/github/coinRunner.png" width="420" /></a>
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/alpha-adjust/alpha-adjust.md"><img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/alpha-adjust/assets/github/alphaAdjust.png" width="420" /></a>
+  <img src="https://github.com/FakeBarenziah/runtheworld/DesertScene.png" width="420" />
+  <img src="https://github.com/FakeBarenziah/runtheworld/MountainJumping.png" width="420" />
 </p>
 <p float="left">
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/snake/snake.md">
-  <img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/snake/assets/github/snake.png" width="420" /></a>
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/blockade/blockade.md"><img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/blockade/assets/github/blockade.png" width="420" /></a>
-</p>
-<p float="left">
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/asteroid/asteroid.md">
-  <img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/asteroid/assets/github/asteroid.png" width="420" /></a>
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/flappy-bird/flappy-bird.md"><img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/flappy-bird/assets/github/flappyBird.png" width="420" /></a>
+
+  <img src="https://github.com/FakeBarenziah/runtheworld/MeetingTheGuru.png" width="420" />
 </p>
 
-![Intermediate](https://img.shields.io/badge/Difficulty-Intermediate-blue.svg)
+## Adding New Terrains
 
-<p float="left">
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/space-invaders/space-invaders.md">
-  <img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/space-invaders/assets/github/spaceInvaders.png" width="420" /></a>
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/tank/tank.md">
-  <img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/tank/assets/github/tank.png" width="420" /></a>
-</p>
-<p float="left">
-  <a href="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/super-mario-land/super-mario-land.md">
-  <img src="https://github.com/digitsensitive/phaser3-typescript/blob/master/src/games/super-mario-land/assets/github/super-mario-land.png" width="420" /></a>
-</p>
+Terrains currently follow a convention of 27 tiles per set and 32x32 pixels per tile. The first 9 tiles are assigned collision properties and represent "underground," or visually below the level the player stands on, and tiles 10-27 are placed on the "surface" level and not assigned collision.
 
-- If you have any suggestion for a next game example, let me know!
+To add new tilesets, place the .png file into /src/boilerplate/assets, and then add the path in a load statement below line 52 of /src/boilerplate/scenes/mainScene.ts in the same way that the other sets are given. Then add the corresponding key into the array on line 45 of that file.
 
 ## Cheat Sheets
 
@@ -126,10 +104,6 @@ The following `Compiler Options` have been set in the `tsconfig.json` file:
 
 You can see the complete list of the available options at [here](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 Interesting read about [setting up a nodejs-project](https://codeburst.io/tips-for-setting-up-a-typescript-nodejs-project-5d1c48dc1a2d).
-
-## Changelog
-
-[Learn about the latest improvements](https://github.com/digitsensitive/phaser3-typescript/blob/master/CHANGELOG.md)
 
 ## Contributing
 
