@@ -32,6 +32,14 @@ export class MainScene extends Phaser.Scene {
   public anims:any
   private terrainTypes:Array<string>
   private currentWorld: number
+  private layer1:Phaser.Tilemaps.StaticTilemapLayer
+  private layer2:Phaser.Tilemaps.StaticTilemapLayer
+  private layer3:Phaser.Tilemaps.StaticTilemapLayer
+  private layer4:Phaser.Tilemaps.StaticTilemapLayer
+  private layer5:Phaser.Tilemaps.StaticTilemapLayer
+  private layer6:Phaser.Tilemaps.StaticTilemapLayer
+  private layer7:Phaser.Tilemaps.StaticTilemapLayer
+
 
   constructor() {
 
@@ -56,6 +64,13 @@ export class MainScene extends Phaser.Scene {
     this.load.image("Town", "./src/boilerplate/assets/Town.png")
     this.load.image("Mountain", "./src/boilerplate/assets/Mountain.png")
 
+    this.load.image("BackgroundPallette", "./src/boilerplate/assets/BackgroundPallete.png")
+
+    this.load.tilemapTiledJSON("bg1", "./src/boilerplate/assets/bg1.json")
+    this.load.tilemapTiledJSON("bg2", "./src/boilerplate/assets/bg2.json")
+    this.load.tilemapTiledJSON("bg3", "./src/boilerplate/assets/bg3.json")
+    this.load.tilemapTiledJSON("bg4", "./src/boilerplate/assets/bg4.json")
+
 
 
     //Load up the image for our guy
@@ -65,6 +80,30 @@ export class MainScene extends Phaser.Scene {
 
 
   create(): void {
+
+    var bgMap1 = this.make.tilemap({key:"bg1"})
+    var bgMap2 = this.make.tilemap({key:"bg2"})
+    var bgMap3 = this.make.tilemap({key:"bg2"})
+    var bgMap4 = this.make.tilemap({key:"bg3"})
+    var bgMap5 = this.make.tilemap({key:"bg3"})
+    var bgMap6 = this.make.tilemap({key:"bg4"})
+    var bgMap7 = this.make.tilemap({key:"bg4"})
+
+    var backgroundTileset1 = bgMap1.addTilesetImage("BackgroundPallette")
+    var backgroundTileset2 = bgMap2.addTilesetImage("BackgroundPallette")
+    var backgroundTileset3 = bgMap3.addTilesetImage("BackgroundPallette")
+    var backgroundTileset4 = bgMap4.addTilesetImage("BackgroundPallette")
+    var backgroundTileset5 = bgMap2.addTilesetImage("BackgroundPallette")
+    var backgroundTileset6 = bgMap3.addTilesetImage("BackgroundPallette")
+    var backgroundTileset7 = bgMap4.addTilesetImage("BackgroundPallette")
+
+    this.layer1 = bgMap1.createStaticLayer("Tile Layer 1", backgroundTileset1, 75, 0)
+    this.layer2 = bgMap2.createStaticLayer("Tile Layer 1", backgroundTileset2, 75, 0)
+    this.layer3 = bgMap3.createStaticLayer("Tile Layer 1", backgroundTileset3, -75, 0)
+    this.layer4 = bgMap4.createStaticLayer("Tile Layer 1", backgroundTileset4, 75, 0)
+    this.layer5 = bgMap5.createStaticLayer("Tile Layer 1", backgroundTileset5, -75, 0)
+    this.layer6 = bgMap6.createStaticLayer("Tile Layer 1", backgroundTileset6, 75, 0)
+    this.layer7 = bgMap7.createStaticLayer("Tile Layer 1", backgroundTileset7, -75, 0)
 
     ///Generate two random chunks
     var terrain1 = this.terrainTypes[Math.floor(Math.random()*this.terrainTypes.length)]
@@ -159,6 +198,25 @@ export class MainScene extends Phaser.Scene {
     if(input.small && this.zoom > .15){
       this.zoom -= .05
     }
+    if(input.left&&!this.guy.body.blocked.left){
+      this.layer1.x -= 3
+      this.layer2.x -= 3/2
+      this.layer3.x -= 3/2
+      this.layer4.x -= 3/4
+      this.layer5.x -= 3/4
+      this.layer6.x -= 3/8
+      this.layer7.x -= 3/8
+
+    }
+    if(input.right&&!this.guy.body.blocked.right){
+      this.layer1.x += 3
+      this.layer2.x += 3/2
+      this.layer3.x += 3/2
+      this.layer4.x += 3/4
+      this.layer5.x += 3/4
+      this.layer6.x += 3/8
+      this.layer7.x += 3/8
+    }
 
     this.cameras.main.zoom = 1/this.zoom
     this.guy.setScale(this.zoom*2)
@@ -175,6 +233,10 @@ export class MainScene extends Phaser.Scene {
       })
 
       this.guy.x -= 150*32
+      this.layer1.x -=150*32
+      this.layer2.x -=150*32
+      this.layer3.x -=150*32
+      this.layer4.x -=150*32
 
       if(this.currentWorld===this.world-1){
         this.loadNewMap(false)}
@@ -188,6 +250,10 @@ export class MainScene extends Phaser.Scene {
       })
 
       this.guy.x += 150*32
+      this.layer1.x +=150*32
+      this.layer2.x +=150*32
+      this.layer3.x +=150*32
+      this.layer4.x +=150*32
 
       if(this.currentWorld===0){
         this.loadNewMap(true)
