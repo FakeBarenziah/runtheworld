@@ -213,6 +213,10 @@ export class MainScene extends Phaser.Scene {
       })
 
       this.guy.x -= 150*32
+      this.layer1.x -=150*32
+      this.layer2.x -=150*32
+      this.layer3.x -=150*32
+      this.layer4.x -=150*32
 
       if(this.currentWorld===this.world-1){
         this.loadNewMap(false)}
@@ -226,6 +230,10 @@ export class MainScene extends Phaser.Scene {
       })
 
       this.guy.x += 150*32
+      this.layer1.x +=150*32
+      this.layer2.x +=150*32
+      this.layer3.x +=150*32
+      this.layer4.x +=150*32
 
       if(this.currentWorld===0){
         this.loadNewMap(true)
