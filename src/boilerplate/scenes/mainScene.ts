@@ -36,6 +36,9 @@ export class MainScene extends Phaser.Scene {
   private layer2:Phaser.Tilemaps.StaticTilemapLayer
   private layer3:Phaser.Tilemaps.StaticTilemapLayer
   private layer4:Phaser.Tilemaps.StaticTilemapLayer
+  private layer5:Phaser.Tilemaps.StaticTilemapLayer
+  private layer6:Phaser.Tilemaps.StaticTilemapLayer
+  private layer7:Phaser.Tilemaps.StaticTilemapLayer
 
 
   constructor() {
@@ -78,18 +81,27 @@ export class MainScene extends Phaser.Scene {
 
     var bgMap1 = this.make.tilemap({key:"bg1"})
     var bgMap2 = this.make.tilemap({key:"bg2"})
-    var bgMap3 = this.make.tilemap({key:"bg3"})
-    var bgMap4 = this.make.tilemap({key:"bg4"})
+    var bgMap3 = this.make.tilemap({key:"bg2"})
+    var bgMap4 = this.make.tilemap({key:"bg3"})
+    var bgMap5 = this.make.tilemap({key:"bg3"})
+    var bgMap6 = this.make.tilemap({key:"bg4"})
+    var bgMap7 = this.make.tilemap({key:"bg4"})
 
     var backgroundTileset1 = bgMap1.addTilesetImage("BackgroundPallette")
     var backgroundTileset2 = bgMap2.addTilesetImage("BackgroundPallette")
     var backgroundTileset3 = bgMap3.addTilesetImage("BackgroundPallette")
     var backgroundTileset4 = bgMap4.addTilesetImage("BackgroundPallette")
+    var backgroundTileset5 = bgMap2.addTilesetImage("BackgroundPallette")
+    var backgroundTileset6 = bgMap3.addTilesetImage("BackgroundPallette")
+    var backgroundTileset7 = bgMap4.addTilesetImage("BackgroundPallette")
 
-    this.layer1 = bgMap1.createStaticLayer("Tile Layer 1", backgroundTileset1, 0, 0)
-    this.layer2 = bgMap2.createStaticLayer("Tile Layer 1", backgroundTileset2, 0, 0)
-    this.layer3 = bgMap3.createStaticLayer("Tile Layer 1", backgroundTileset3, 0, 0)
-    this.layer4 = bgMap4.createStaticLayer("Tile Layer 1", backgroundTileset4, 0, 0)
+    this.layer1 = bgMap1.createStaticLayer("Tile Layer 1", backgroundTileset1, 75, 0)
+    this.layer2 = bgMap2.createStaticLayer("Tile Layer 1", backgroundTileset2, 75, 0)
+    this.layer3 = bgMap3.createStaticLayer("Tile Layer 1", backgroundTileset3, -75, 0)
+    this.layer4 = bgMap4.createStaticLayer("Tile Layer 1", backgroundTileset4, 75, 0)
+    this.layer5 = bgMap5.createStaticLayer("Tile Layer 1", backgroundTileset5, -75, 0)
+    this.layer6 = bgMap6.createStaticLayer("Tile Layer 1", backgroundTileset6, 75, 0)
+    this.layer7 = bgMap7.createStaticLayer("Tile Layer 1", backgroundTileset7, -75, 0)
 
     ///Generate two random chunks
     var terrain1 = this.terrainTypes[Math.floor(Math.random()*this.terrainTypes.length)]
@@ -187,15 +199,21 @@ export class MainScene extends Phaser.Scene {
     if(input.left&&!this.guy.body.blocked.left){
       this.layer1.x -= 3
       this.layer2.x -= 3/2
-      this.layer3.x -= 3/4
-      this.layer4.x -= 3/8
+      this.layer3.x -= 3/2
+      this.layer4.x -= 3/4
+      this.layer5.x -= 3/4
+      this.layer6.x -= 3/8
+      this.layer7.x -= 3/8
 
     }
     if(input.right&&!this.guy.body.blocked.right){
       this.layer1.x += 3
       this.layer2.x += 3/2
-      this.layer3.x += 3/4
-      this.layer4.x += 3/8
+      this.layer3.x += 3/2
+      this.layer4.x += 3/4
+      this.layer5.x += 3/4
+      this.layer6.x += 3/8
+      this.layer7.x += 3/8
     }
 
     this.cameras.main.zoom = 1/this.zoom
