@@ -1,18 +1,18 @@
 import MapMaker from "./MapMaker"
 export default function(type:string){
   const data = MapMaker(type)
-  return { "height":150,
+  return { "height":100,
   "infinite":false,
   "layers":[
          {
           "data": data,
-          "height":150,
+          "height":100,
           "id":1,
           "name":"Tile Layer 1",
           "opacity":1,
           "type":"tilelayer",
           "visible":true,
-          "width":300,
+          "width":150,
           "x":0,
           "y":0
          }],
@@ -121,7 +121,7 @@ export default function(type:string){
   "tilewidth":32,
   "type":"map",
   "version":1.2,
-  "width":300
+  "width":150
  }
 
 }
