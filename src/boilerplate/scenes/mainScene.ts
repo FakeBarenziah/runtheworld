@@ -59,7 +59,7 @@ export class MainScene extends Phaser.Scene {
     this.load.image("Town", "./src/boilerplate/assets/Town.png")
     this.load.image("Mountain", "./src/boilerplate/assets/Mountain.png")
 
-    this.load.image("bgPallette", "./src/boilerplate/assets/BackgroundPallete.png")
+    this.load.image("BackgroundPallette", "./src/boilerplate/assets/BackgroundPallete.png")
 
     this.load.tilemapTiledJSON("bg1", "./src/boilerplate/assets/bg1.json")
     this.load.tilemapTiledJSON("bg2", "./src/boilerplate/assets/bg2.json")
@@ -81,10 +81,10 @@ export class MainScene extends Phaser.Scene {
     var bgMap3 = this.make.tilemap({key:"bg3"})
     var bgMap4 = this.make.tilemap({key:"bg4"})
 
-    var backgroundTileset1 = bgMap1.addTilesetImage("bgPallette")
-    var backgroundTileset2 = bgMap2.addTilesetImage("bgPallette")
-    var backgroundTileset3 = bgMap3.addTilesetImage("bgPallette")
-    var backgroundTileset4 = bgMap4.addTilesetImage("bgPallette")
+    var backgroundTileset1 = bgMap1.addTilesetImage("BackgroundPallette")
+    var backgroundTileset2 = bgMap2.addTilesetImage("BackgroundPallette")
+    var backgroundTileset3 = bgMap3.addTilesetImage("BackgroundPallette")
+    var backgroundTileset4 = bgMap4.addTilesetImage("BackgroundPallette")
 
     this.layer1 = bgMap1.createStaticLayer("Tile Layer 1", backgroundTileset1, 0, 0)
     this.layer2 = bgMap2.createStaticLayer("Tile Layer 1", backgroundTileset2, 0, 0)
