@@ -1,19 +1,13 @@
 <p align="center">
-  <img width=100% src="https://github.com/digitsensitive/phaser3-typescript/blob/master/assets/github/phaser3-typescript.png">
-  Phaser 3 Game Examples written in TypeScript.
+  <img width=100% src="Logo.png">
+  Runn the World is an infinite sidescroller with procedurally-generated levels written in TypeScript.
 </p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![dependencies status badge](https://david-dm.org/digitsensitive/phaser3-typescript/status.svg)](https://david-dm.org/digitsensitive/phaser3-typescript)
-[![development dependencies status badge](https://david-dm.org/digitsensitive/phaser3-typescript/dev-status.svg)](https://david-dm.org/digitsensitive/phaser3-typescript/?type=dev)
-[![GitHub issues](https://img.shields.io/github/issues/digitsensitive/phaser3-typescript.svg)](https://github.com/digitsensitive/phaser3-typescript/issues)
-[![GitHub stars](https://img.shields.io/github/stars/digitsensitive/phaser3-typescript.svg)](https://github.com/digitsensitive/phaser3-typescript/stargazers)
-![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
-[![Code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![GitHub license](https://img.shields.io/github/license/digitsensitive/phaser3-typescript.svg)](https://github.com/digitsensitive/phaser3-typescript)
+
 
 <div align="center">
-  <sub>Examples made with ❤︎ by <a href="https://github.com/digitsensitive">digitsensitive</a></br>
+  <sub>Original boilerplate made with ❤︎ by <a href="https://github.com/digitsensitive/phaser3-typescript/">digitsensitive</a></br>
   Framework created by <a href="https://github.com/photonstorm">Photonstorm</a></sub>
 </div>
 
@@ -21,10 +15,7 @@
 
 [Phaser](https://github.com/photonstorm/phaser) is a wonderful, fast and
 free open source HTML5 game framework.
-Here you will find everything you need to develop games with Phaser 3
-in TypeScript. Have fun discovering, developing and playing!
-Ideas and corrections are highly desirable to constantly
-improve this repository!
+It's used here with Typescript to enhance maintainability and understandability. New sets of 27 tiles at 32x32 pixels can be added into /src/boilerplate/assets, and then by adding the path in a load statement below line 52 of /src/boilerplate/scenes/mainScene.ts and adding the key into the array on line 45.
 
 <div align="center">
 <a href="https://www.buymeacoffee.com/JZDVjsT26" target="blank">

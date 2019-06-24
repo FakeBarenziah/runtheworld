@@ -48,7 +48,9 @@ export class MainScene extends Phaser.Scene {
 
   preload(): void {
 
-    //Pull in all of our tilesets and backgrounds
+    // Pull in all of our tilesets and backgrounds
+
+    // Load your new tilesets here
     this.load.image('Desert', "./src/boilerplate/assets/Desert.png")
     this.load.image("Castle", "./src/boilerplate/assets/Castle.png")
     this.load.image("Town", "./src/boilerplate/assets/Town.png")
