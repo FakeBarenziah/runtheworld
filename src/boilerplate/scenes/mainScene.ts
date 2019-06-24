@@ -42,8 +42,7 @@ export class MainScene extends Phaser.Scene {
     this.zoom = 1.0
     this.world = 2
     this.currentWorld = 0
-    this.terrainTypes = ["Mountain"]
-    // this.terrainTypes = ["Desert", "Castle", "Town", "Mountain"]
+    this.terrainTypes = ["Desert", "Castle", "Town", "Mountain"]
   }
 
 
@@ -152,10 +151,10 @@ export class MainScene extends Phaser.Scene {
     this.guy.anims.play("walk", this.guy)
     } else this.guy.anims.play("stand", this.guy)
 
-    if(input.big && this.zoom < 6){
+    if(input.big && this.zoom < 5){
      this.zoom += .05
     }
-    if(input.small && this.zoom > .14){
+    if(input.small && this.zoom > .15){
       this.zoom -= .05
     }
 
