@@ -63,7 +63,7 @@ npm run dev
 
 Terrains currently follow a convention of 27 tiles per set and 32x32 pixels per tile. The first 9 tiles are assigned collision properties and represent "underground," or visually below the level the player stands on, and tiles 10-27 are placed on the "surface" level and not assigned collision.
 
-To add new tilesets, place the .png file into /src/boilerplate/assets, and then add the path in a load statement below line 52 of /src/boilerplate/scenes/mainScene.ts in the same way that the other sets are given. Then add the corresponding key into the array on line 45 of that file.
+To add new tilesets, place the .png file into /src/boilerplate/assets, and then add the path in a load statement below line 61 of /src/boilerplate/scenes/mainScene.ts in the same way that the other sets are given. Then add the corresponding key into the array on line 53 of that file.
 
 ## Cheat Sheets
 
